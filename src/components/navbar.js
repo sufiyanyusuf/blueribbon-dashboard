@@ -24,6 +24,7 @@ const NavBar = () => {
       <span>
         <Link to="/">Home</Link>&nbsp;
         <Link to="/profile">Profile</Link>
+        <Link to="/login">Login</Link>
       </span>
     )}
     </div>

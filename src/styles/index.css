@@ -1,10 +1,10 @@
 @font-face {
   font-family: "TTCommons-Bold";
-  src: url("../../public/assets/fonts/TTCommons-Bold.ttf") format("truetype"); }
+  src: url("../assets/fonts/TTCommons-Bold.ttf") format("truetype"); }
 
 @font-face {
   font-family: "TTCommons-Regular";
-  src: url("../../public/assets/fonts/TTCommons-Regular.ttf") format("truetype"); }
+  src: url("../assets/fonts/TTCommons-Regular.ttf") format("truetype"); }
 
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)

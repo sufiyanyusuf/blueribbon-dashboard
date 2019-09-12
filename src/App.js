@@ -9,6 +9,7 @@ import NavBar from "./components/navbar";
 import { useAuth0 } from "./react-auth0-wrapper";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Profile from "./components/profile";
+import Login from "./views/loginScreen";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Switch>
           <Route path="/" exact />
           <Route path="/profile" component={Profile} />
+          <Route path="/login" component={Login} />
         </Switch>
       </BrowserRouter>
     </div>

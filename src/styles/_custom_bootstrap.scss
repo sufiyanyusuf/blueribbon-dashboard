@@ -1,8 +1,8 @@
 @import 'mixins';
 
 //fonts
-@include font-face(TTCommons-Bold, "../../public/assets/fonts/TTCommons-Bold", null, null, ttf);
-@include font-face(TTCommons-Regular, "../../public/assets/fonts/TTCommons-Regular", null, null, ttf);
+@include font-face(TTCommons-Bold, "../assets/fonts/TTCommons-Bold", null, null, ttf);
+@include font-face(TTCommons-Regular, "../assets/fonts/TTCommons-Regular", null, null, ttf);
 
 //New color
 $new-color: #ad9a5b;

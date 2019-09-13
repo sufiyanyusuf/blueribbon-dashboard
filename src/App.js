@@ -7,24 +7,44 @@ import './styles/index.css'
 
 import NavBar from "./components/navbar";
 import { useAuth0 } from "./react-auth0-wrapper";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom'
 import Profile from "./components/profile";
 import Login from "./views/loginScreen";
+import Listing from "./views/Listing";
 
 function App() {
+
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  console.log("auth ? ",isAuthenticated);
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      isAuthenticated === false
+        ? <Redirect to='/login' />
+        : <Component {...props} />
+    )} />
+  )
+
   return (
     <div className="App">
       {/* New - use BrowserRouter to provide access to /profile */}
-      <BrowserRouter>
-        <header>
-          <NavBar />
-        </header>
+      <Router>
+        {isAuthenticated && (
+          <NavBar/>
+        )}
         <Switch>
-          <Route path="/" exact />
-          <Route path="/profile" component={Profile} />
+          <PrivateRoute exact path="/" component={Listing} />
+          <PrivateRoute path="/profile" component={Profile} />
           <Route path="/login" component={Login} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

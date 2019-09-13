@@ -5,7 +5,7 @@
 @include font-face(TTCommons-Regular, "../assets/fonts/TTCommons-Regular", null, null, ttf);
 
 //New color
-$new-color: #ad9a5b;
+$new-color: #0A71F2;
 
 $theme-colors: (
 primary: $new-color,
@@ -19,4 +19,7 @@ dark: $new-color
 ) !default;
 
 $font-family-sans-serif: "TTCommons-Bold", !default;
-$font-family-base:       $font-family-sans-serif !important;
+$font-family-base:  $font-family-sans-serif !important;
+
+$font-size-base: 24;
+$font-size-h1: floor(($font-size-base * 3));

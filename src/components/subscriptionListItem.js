@@ -1,10 +1,13 @@
 import React from "react";
 import styled from 'styled-components';
 import { Button,Container,Row,Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ListItem = (props) => {
 
     const StyledRow = styled.div`
+        padding-left:20px;
+        padding-right:20px;
         padding-top:20px;
         padding-bottom:20px;
         background-color: #FFFFFF;
@@ -20,14 +23,16 @@ const ListItem = (props) => {
 
 
     return (
-        <StyledRow key={subscription.key} onClick = {props.selected}>
-            <Row>
-                <Col>{subscription.date}</Col>
-                <Col xs={6}>{subscription.title}</Col>
-                <Col>{subscription.status}</Col>
-                <Col>{subscription.count}</Col>
-            </Row>
-        </StyledRow>
+        <Link to="/profile" id={subscription.key} style={{ textDecoration: 'none' }} >
+            <StyledRow key={subscription.key} onClick = {props.selected}>
+                <Row>
+                    <Col>{subscription.date}</Col>
+                    <Col xs={6}>{subscription.title}</Col>
+                    <Col>{subscription.status}</Col>
+                    <Col>{subscription.count}</Col>
+                </Row>
+            </StyledRow>
+        </Link>
     );
 
 

@@ -1,8 +1,6 @@
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Alert} from 'react-bootstrap';
 import './styles/index.css'
 
 import NavBar from "./components/navbar";
@@ -18,11 +16,12 @@ import {
 import Profile from "./components/profile";
 import Login from "./views/loginScreen";
 import Listing from "./views/Listing";
+import LocationForm from "./views/listingCreation/locationsForm";
+import ProductInfoForm from "./views/listingCreation/productInfo";
 
 function App() {
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  console.log("auth ? ",isAuthenticated);
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
@@ -34,7 +33,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* New - use BrowserRouter to provide access to /profile */}
       <Router>
         {isAuthenticated && (
           <NavBar/>
@@ -42,7 +40,9 @@ function App() {
         <Switch>
           <PrivateRoute exact path="/" component={Listing} />
           <PrivateRoute path="/profile" component={Profile} />
-          <Route path="/login" component={Login} />
+          <PrivateRoute path="/profile" component={Profile} />
+          <Route path="/listing/new/locationForm" component={LocationForm} />
+          <Route path="/listing/new/productInfo" component={ProductInfoForm} />
         </Switch>
       </Router>
     </div>

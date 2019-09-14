@@ -18,8 +18,8 @@ light: $new-color,
 dark: $new-color
 ) !default;
 
-$font-family-sans-serif: "TTCommons-Bold", !default;
+$font-family-sans-serif: "TTCommons-Regular", !default;
 $font-family-base:  $font-family-sans-serif !important;
 
-$font-size-base: 24;
-$font-size-h1: floor(($font-size-base * 3));
+$font-size-base: 20;
+$font-size-h1: floor(($font-size-base * 4));

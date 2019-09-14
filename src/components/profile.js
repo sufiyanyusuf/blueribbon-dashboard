@@ -3,7 +3,7 @@
 import React from "react";
 import { useAuth0 } from "../react-auth0-wrapper";
 
-const Profile = () => {
+const Profile = (props) => {
   const { loading, user } = useAuth0();
 
   if (loading || !user) {
@@ -11,6 +11,8 @@ const Profile = () => {
       <div>Loading...</div>
     );
   }
+
+  console.log(props, props.id);
 
   return (
     <div>

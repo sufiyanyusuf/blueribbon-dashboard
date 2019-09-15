@@ -17,7 +17,10 @@ import Profile from "./components/profile";
 import Login from "./views/loginScreen";
 import Listing from "./views/Listing";
 import LocationForm from "./views/listingCreation/locationsForm";
-import ProductInfoForm from "./views/listingCreation/productInfo";
+import ProductInfoForm from "./views/listingCreation/productInfoForm";
+import ModifierForm from "./views/listingCreation/modifierForm";
+import PricingForm from "./views/listingCreation/pricingForm";
+import FulfillmentForm from "./views/listingCreation/fulfillmentForm";
 
 function App() {
 
@@ -42,6 +45,9 @@ function App() {
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/profile" component={Profile} />
           <Route path="/listing/new/locationForm" component={LocationForm} />
+          <Route path="/listing/new/modifierForm" component={ModifierForm} />
+          <Route path="/listing/new/pricingForm" component={PricingForm} />
+          <Route path="/listing/new/fulfillmentForm" component={FulfillmentForm} />
           <Route path="/listing/new/productInfo" component={ProductInfoForm} />
         </Switch>
       </Router>

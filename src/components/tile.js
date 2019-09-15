@@ -5,7 +5,7 @@ const Tile = (props) => {
 
     const Container = styled.div`
         padding-top:40px;
-        padding-bottom:30px;
+        padding-bottom:20px;
         background-color: #F5F4F4;
         transition: 0.3s;
         :hover{

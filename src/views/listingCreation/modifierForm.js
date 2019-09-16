@@ -30,8 +30,11 @@ const ModifierForm = () => {
     const [modifiers, updateModifierList] = useState(defaultModifiers);
 
     const addModifier = (obj) => {
+        
         setTextfieldFormVisible(false);
         setStepperFormVisible(false);
+        setCarouselFormVisible(false);
+        setOptionListFormVisible(false);
         
         updateModifierList(modifiers.concat([{
             key:modifiers.length+1,
@@ -55,14 +58,14 @@ const ModifierForm = () => {
         >
             <Modal.Header>
                 <Modal.Title style={{paddingTop:10,paddingLeft:20}}>Create A List</Modal.Title>
-                <Button onClick={() => setOptionListFormVisible(false)}>Save & Close</Button>
+                <Button onClick={() => setOptionListFormVisible(false)}>Cancel</Button>
             </Modal.Header>
 
             <Modal.Body>
                 <Container>
                     <Row>
                         <Col md={{ span: 8, offset: 1 }}>
-                            <NewOptionListForm/>
+                            <NewOptionListForm addModifier={addModifier}/>
                         </Col>
                     </Row>
                 </Container>
@@ -84,7 +87,7 @@ const ModifierForm = () => {
                 <Container>
                     <Row>
                         <Col md={{ span: 8, offset: 1 }}>
-                            <NewCarouselForm/>
+                            <NewCarouselForm addModifier={addModifier}/>
                         </Col>
                     </Row>
                 </Container>

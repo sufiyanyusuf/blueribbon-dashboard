@@ -1,8 +1,40 @@
-import React from "react";
+import React,{useState,useRef} from "react";
 import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-bootstrap";
+import CarouselChoiceFragment from '../../components/carouselChoiceFormFragment';
+import ListItem from '../../components/carouselChoicesListItem';
 
-const NewCarouselForm = () => {
-  
+const NewCarouselForm = (props) => {
+
+  const [choiceList,addToChoiceList] = useState([]);
+  const modifierTitle = useRef(null);
+  const modifierPrompt = useRef(null);
+  const modifierMandatory = useRef(null);
+  const modifierMultiSelect = useRef(null);
+  const modifierType = useRef(null);
+
+  const addChoice = (obj) => {
+    
+    addToChoiceList(choiceList.concat([{
+      key:choiceList.length+1,
+      order:choiceList.length+1,
+      title:obj.title, 
+      pricing:obj.pricing,
+      explainer:obj.explainer,
+      icon:obj.icon 
+    }]))
+        
+  }
+
+  function ChoiceList() {
+    const items = choiceList;
+    const listItems = items.map((item) => 
+      <ListItem key= {item.key} item={item} selected={()=>console.log("clicked",item.key)}/>
+    );
+    return (
+        listItems
+    );
+  }
+
   return (
     <Container>
 
@@ -22,7 +54,7 @@ const NewCarouselForm = () => {
               <Col>
                 <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                     <Form.Label>Modifier Title</Form.Label>
-                    <Form.Control placeholder="Modifier Title" />
+                    <Form.Control placeholder="Modifier Title" ref={modifierTitle}/>
                 </Form.Group>
               </Col>
             </Row>
@@ -33,7 +65,7 @@ const NewCarouselForm = () => {
               <Col>
                 <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                     <Form.Label>Modifier Prompt</Form.Label>
-                    <Form.Control placeholder="Modifier Prompt" />
+                    <Form.Control placeholder="Modifier Prompt" ref={modifierPrompt}/>
                 </Form.Group>
               </Col>
             </Row>
@@ -43,12 +75,12 @@ const NewCarouselForm = () => {
             <Row>
               <Col>
                 <Form.Group controlId="mandatory">
-                  <Form.Check type="checkbox" label="Mandatory" />
+                  <Form.Check type="checkbox" label="Mandatory" ref={modifierMandatory}/>
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="multiselection">
-                  <Form.Check type="checkbox" label="MultiSelection" />
+                  <Form.Check type="checkbox" label="MultiSelection" ref={modifierMultiSelect}/>
                 </Form.Group>
               </Col>
             </Row>
@@ -65,19 +97,15 @@ const NewCarouselForm = () => {
 
             <Row>
               <Col>
-                <Form.Group controlId="type-product">
-                  <Form.Check type="checkbox" label="Product Spec" />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="type-delivery">
-                  <Form.Check type="checkbox" label="Delivery" />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="type-subscription">
-                  <Form.Check type="checkbox" label="Subscription" />
-                </Form.Group>
+              <Form.Group controlId="exampleForm.ControlSelect">
+                <Form.Label>Select Type</Form.Label>
+                <Form.Control as="select" ref={modifierType}>
+                  <option>None</option>
+                  <option>Product</option>
+                  <option>Subscription</option>
+                  <option>Delivery</option>
+                </Form.Control>
+              </Form.Group>
               </Col>
             </Row>
 
@@ -89,60 +117,25 @@ const NewCarouselForm = () => {
               </h2>
             </Row>
 
-            <div style={styles.spacer20}></div>
+            <CarouselChoiceFragment addChoice = {addChoice}/>
 
-            <Row>
-              <Col>
-                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
-                    <Form.Label>Choice Title</Form.Label>
-                    <Form.Control placeholder="Modifier Title" />
-                </Form.Group>
-              </Col>
-            </Row>
+            <div style = {styles.leftTextAlign}>
+              <ChoiceList/>
+            </div>
 
             <div style={styles.spacer20}></div>
 
             <Row>
-              <Col>
-                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
-                    <Form.Label>Pricing Impact</Form.Label>
-                    <Form.Control placeholder="0.00" />
-                </Form.Group>
-              </Col>
+              <Button onClick = { () => {props.addModifier({
+                title:modifierTitle.current.value,
+                prompt:modifierPrompt.current.value,
+                mandatory:modifierMandatory.current.checked,
+                type:modifierType.current.value,
+                element:"Carousel",
+                choices:choiceList
+                })} 
+              }>Save & Close</Button>
             </Row>
-
-            <div style={styles.spacer20}></div>
-
-
-            <Row>
-              <Col>
-                <Form.Group controlId="exampleForm.ControlTextarea1" style = {{textAlign:"left"}}>
-                    <Form.Label>Explainer Text</Form.Label>
-                    <Form.Control as="textarea" rows="3" />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <div style={styles.spacer20}></div>
-
-            <Row>
-              <Col>
-                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
-                  <Form.Label>Upload Icon</Form.Label><br/>
-                  <input type="file" name="file"/>
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <div style={styles.spacer20}></div>
-
-            <Button variant="primary">
-                Add Choice
-            </Button>
-
-
-            <div style={styles.spacer80}></div>
-    
             
         </Form>
 

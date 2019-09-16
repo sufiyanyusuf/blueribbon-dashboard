@@ -19,18 +19,18 @@ const ModifierForm = () => {
     function ModifierList(props) {
         const items = props.items;
         const listItems = items.map((item) => 
-          <ListItem key= {item.key} item={item} selected={()=>console.log("clicked",item.key)}/>
+          <ListItem key= {item.key} item={item} selected={()=>console.log("clicked",item.key)} remove={props.remove}/>
         );
         return (
             listItems
         );
     }
 
-    const defaultModifiers = [{key:1,order:"No",title:"title",element:"element",type:"type",default:"default"},{key:2,order:"No",title:"title",element:"element",type:"type",default:"default"}];
+    const defaultModifiers = [{key:1,order:"1",title:"title",element:"element",type:"type",default:"default"},{key:2,order:"2",title:"title",element:"element",type:"type",default:"default"}];
     const [modifiers, updateModifierList] = useState(defaultModifiers);
 
     const addModifier = (obj) => {
-        
+
         setTextfieldFormVisible(false);
         setStepperFormVisible(false);
         setCarouselFormVisible(false);
@@ -45,6 +45,18 @@ const ModifierForm = () => {
             default:""}]))
             
         console.log(obj)
+    }
+
+    const removeModifier = (obj) => {
+        var _modifiers = modifiers.filter(modifier=>modifier.key !== obj.key);
+        //reassign order
+        var count = 1;
+        var reorderedModifiers = _modifiers.map((modifier)=>{
+            modifier.order = count;
+            count+=1;
+            return modifier;
+        })
+        updateModifierList(reorderedModifiers);
     }
 
 
@@ -167,7 +179,7 @@ const ModifierForm = () => {
 
         <div style = {styles.leftTextAlign}>
             <ListHeader/>
-            <ModifierList items={modifiers} />
+            <ModifierList items={modifiers} remove = {removeModifier}/>
         </div>
 
 

@@ -18,7 +18,7 @@ const ListHeader = (props) => {
           <Col xs={6}>Title & Prompt</Col>
           <Col>Element</Col>
           <Col>Type</Col>
-          <Col>default</Col>
+          <Col>Remove</Col>
       </Row>
       </StyledRow>
     );

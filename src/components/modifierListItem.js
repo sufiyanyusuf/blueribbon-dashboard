@@ -23,19 +23,16 @@ const ListItem = (props) => {
 
 
     return (
-        <Link to="/profile" id={item.key} style={{ textDecoration: 'none' }} >
             <StyledRow key={item.key} onClick = {props.selected}>
                 <Row>
-                    <Col>{item.key}</Col>
+                    <Col>{item.order}</Col>
                     <Col xs={6}>{item.title}</Col>
                     <Col>{item.element}</Col>
                     <Col>{item.type}</Col>
-                    <Col>{item.default}</Col>
+                    <Col><Button onClick = {()=>props.remove(item)}>Remove</Button></Col>
                 </Row>
             </StyledRow>
-        </Link>
     );
-
 
 
 };

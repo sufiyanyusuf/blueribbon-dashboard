@@ -5,9 +5,14 @@ import Tile from "../components/tile";
 import ListHeader from "../components/subscriptionListHeader";
 import ListItem from "../components/subscriptionListItem";
 import {NavLink} from 'react-router-dom';
+import {StateContext,DispatchContext} from '../redux/contexts';
 
 const Listing = () => {
+  const state = React.useContext(StateContext);
+  const dispatch = React.useContext(DispatchContext);
   const { loading, user } = useAuth0();
+
+  console.log(state);
 
   if (loading || !user) {
     return (
@@ -16,7 +21,7 @@ const Listing = () => {
   }
 
   function SubscriptionList(props) {
-    const subscriptions = props.subscriptions;
+    const subscriptions = state.subscriptions;
     const listItems = subscriptions.map((subscription) =>
      
       <ListItem key= {subscription.key} subscription={subscription} selected={()=>console.log("clicked",subscription.key)}/>

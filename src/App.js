@@ -22,7 +22,17 @@ import ModifierForm from "./views/listingCreation/modifierForm";
 import PricingForm from "./views/listingCreation/pricingForm";
 import FulfillmentForm from "./views/listingCreation/fulfillmentForm";
 
+import reducers from './redux/reducers';
+import globalState from './redux/state';
+import useCombinedReducers from 'use-combined-reducers';
+
+import { StateContext, DispatchContext } from './redux/contexts';
+
 function App() {
+
+  const [state, dispatch] = useCombinedReducers({
+    subscriptions: React.useReducer(reducers.subscriptionsReducer, globalState.subscriptions)
+  });
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
@@ -35,23 +45,30 @@ function App() {
   )
 
   return (
-    <div className="App">
-      <Router>
-        {isAuthenticated && (
-          <NavBar/>
-        )}
-        <Switch>
-          <PrivateRoute exact path="/" component={Listing} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <Route path="/listing/new/locationForm" component={LocationForm} />
-          <Route path="/listing/new/modifierForm" component={ModifierForm} />
-          <Route path="/listing/new/pricingForm" component={PricingForm} />
-          <Route path="/listing/new/fulfillmentForm" component={FulfillmentForm} />
-          <Route path="/listing/new/productInfo" component={ProductInfoForm} />
-        </Switch>
-      </Router>
-    </div>
+
+    <DispatchContext.Provider value={dispatch}>
+        <StateContext.Provider value={state}>
+        <div className="App">
+          <Router>
+            {isAuthenticated && (
+              <NavBar/>
+            )}
+            <Switch>
+              <PrivateRoute exact path="/" component={Listing} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <Route path="/listing/new/locationForm" component={LocationForm} />
+              <Route path="/listing/new/modifierForm" component={ModifierForm} />
+              <Route path="/listing/new/pricingForm" component={PricingForm} />
+              <Route path="/listing/new/fulfillmentForm" component={FulfillmentForm} />
+              <Route path="/listing/new/productInfo" component={ProductInfoForm} />
+              <Route path="/login" component={Login} />
+            </Switch>
+          </Router>
+        </div>
+        </StateContext.Provider>
+    </DispatchContext.Provider>
+   
   );
 }
 

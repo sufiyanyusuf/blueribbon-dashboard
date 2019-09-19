@@ -6,8 +6,10 @@ import ListHeader from "../components/subscriptionListHeader";
 import ListItem from "../components/subscriptionListItem";
 import {NavLink} from 'react-router-dom';
 import {StateContext,DispatchContext} from '../redux/contexts';
+import uuid from 'uuid/v4';
 
 const Listing = () => {
+
   const state = React.useContext(StateContext);
   const dispatch = React.useContext(DispatchContext);
   const { loading, user } = useAuth0();
@@ -33,7 +35,8 @@ const Listing = () => {
   }
   
   const subscriptions = [{key:1,date:"date",title:"title",status:"live",count:"232"},{key:2,date:"date",title:"title",status:"live",count:"232"}];
-
+  // <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Coupons, On Demand" tilePressed = { () => { dispatch({ type: 'ADD_SUBSCRIPTION', key:uuid(),date:"date",title:"title",status:"draft",count:"-"}); } }/>
+  // dispatch({ type: 'NEW_SUBSCRIPTION', flowTitle:'CreateSubscriptionFlow'});    
   return (
     <Container>
 
@@ -47,7 +50,7 @@ const Listing = () => {
       <div style={styles.spacer20}></div>
       <Row>
         <Col>
-          <NavLink to="/listing/new/modifierForm" style={{textDecoration:"none"}}>
+          <NavLink to="/listing/new/productInfo" style={{textDecoration:"none"}}>
             <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Coupons, On Demand" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
          </Col>

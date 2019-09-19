@@ -6,6 +6,8 @@
 
 //New color
 $new-color: #0A71F2;
+$light: #F7F7F7;
+$red : #FF3434;
 
 $theme-colors: (
 primary: $new-color,
@@ -13,8 +15,8 @@ secondary: $new-color,
 success: $new-color,
 info: $new-color,
 warning: $new-color,
-danger: $new-color,
-light: $new-color,
+danger: $red,
+light: $light,
 dark: $new-color
 ) !default;
 

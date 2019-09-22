@@ -31,7 +31,8 @@ import { StateContext, DispatchContext } from './redux/contexts';
 function App() {
 
   const [state, dispatch] = useCombinedReducers({
-    subscriptions: React.useReducer(reducers.subscriptionsReducer, globalState.subscriptions)
+    subscriptions: React.useReducer(reducers.listingReducer, globalState.subscriptions),
+    currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo)
   });
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();

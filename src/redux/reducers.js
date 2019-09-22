@@ -1,19 +1,9 @@
 
 import React, { Component,useReducer } from 'react';
 import initialTodos from './state';
+import Actions from './actions';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
-const filterReducer = (state, action) => {
-    switch (action.type) {
-      case 'SHOW_ALL':
-        return 'ALL';
-      case 'SHOW_COMPLETE':
-        return 'COMPLETE';
-      case 'SHOW_INCOMPLETE':
-        return 'INCOMPLETE';
-      default:
-        return state;
-    }
-  };
   
 const todoReducer = (state, action) => {
     switch (action.type) {
@@ -46,26 +36,63 @@ const todoReducer = (state, action) => {
 
 //   {key:1,date:"date",title:"title",status:"live",count:"232"},
 
-  const subscriptionsReducer = (state, action) => {
-      switch (action.type) {
-          case 'ADD_SUBSCRIPTION':
-            return state.concat({
-                key: action.id,
-                date: action.date,
-                title: action.title,
-                status:action.status,
-                count: action.count
-            });
-          default:
+  const listingReducer = (state, action) => {
+    switch (action.type) {
+    case Actions.listing.currentSubscription:
+        return ({
+            key: action.id,
+            date: action.date,
+            title: action.title,
+            status:action.status,
+            count: action.count
+        });
+    case Actions.listing.updateAll:
+        return action.listings;
+    default:
+        return state;
+    }
+  };
+
+  const productInfoReducer = (state,action) => {
+
+    var info = Object.assign({},state);
+    console.log(state, info);
+    switch (action.type) {
+        case Actions.productInfo.updateProductInfo:
+            return action.productInfo;
+
+        case Actions.productInfo.updateTitle:
+            info.title = action.title;
+            return info;
+
+        case Actions.productInfo.updateDescription:
+            info.description = action.description;
+            return info;
+
+        case Actions.productInfo.updateUnit:
+            info.unit = action.unit;
+            return info;
+
+
+        case Actions.productInfo.updateID:
+                info.id = action.id;
+                return info;
+
+        case Actions.productInfo.update:
+            info = action;
+            return info;
+
+        default:
             return state;
-      }
+    }
   };
 
 
 
   const reducers = {
       "todoReducer":todoReducer,
-      "subscriptionsReducer":subscriptionsReducer
+      "listingReducer":listingReducer,
+      "productInfoReducer":productInfoReducer
   };
 
   export default reducers;

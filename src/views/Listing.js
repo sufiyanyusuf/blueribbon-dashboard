@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useAuth0 } from "../react-auth0-wrapper";
 import { Container,Row,Col } from "react-bootstrap";
 import Tile from "../components/tile";
@@ -6,13 +6,39 @@ import ListHeader from "../components/subscriptionListHeader";
 import ListItem from "../components/subscriptionListItem";
 import {NavLink} from 'react-router-dom';
 import {StateContext,DispatchContext} from '../redux/contexts';
+import axios from 'axios';
 import uuid from 'uuid/v4';
+import Actions from '../redux/actions';
 
 const Listing = () => {
 
   const state = React.useContext(StateContext);
   const dispatch = React.useContext(DispatchContext);
   const { loading, user } = useAuth0();
+
+  useEffect(() => {
+    // Fetch lists
+    axios.get('http://localhost:4000/organizations/listing/2')
+      .then(res => {
+        const listings = res.data[0].listings;
+        let _listings = listings.map((listing) => {
+          return {
+             key: listing.id,
+             date: listing.created_at,
+             title: listing.title,
+             status:listing.status,
+             count: 0
+          }
+        });
+
+          //check for change before dispatch
+        if (JSON.stringify(_listings)!==JSON.stringify(state.subscriptions)){
+          dispatch({ type: Actions.listing.updateAll, listings:_listings});
+        }
+        
+      })
+  });
+
 
   console.log(state);
 

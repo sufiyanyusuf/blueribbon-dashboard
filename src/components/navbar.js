@@ -5,12 +5,18 @@ import { useAuth0 } from "../react-auth0-wrapper";
 import { NavLink,Route,Link,withRouter } from "react-router-dom";
 import { Button,Container,Row,Col,Navbar,Nav } from "react-bootstrap";
 import { ReactComponent as Logo } from '../assets/img/logo.svg';
+import {StateContext,DispatchContext} from '../redux/contexts';
+import Actions from '../redux/actions';
+import axios from 'axios';
 
 const NavBar = (props) => {
 
   const showNewSubNav = props.location.pathname.includes('/listing/new');
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const state = React.useContext(StateContext);
+  const dispatch = React.useContext(DispatchContext);
+
   let styles = {
     spacer10:{
       height:10,
@@ -47,7 +53,35 @@ const NavBar = (props) => {
     );
   }
 
-  function getNext(currentPath){
+  const nextPressed = (currentPath)=>{
+    if (currentPath.includes('/listing/new/productInfo')){
+
+      console.log('gonna request, prestate - ',state.currentProductInfo);
+
+      if (state.currentProductInfo.id === ''){
+
+        axios.post('http://localhost:4000/listing/create', {
+          title:state.currentProductInfo.title,
+          org_id:2,
+          description:state.currentProductInfo.description,
+          type:'product',
+        }).then(res =>{
+          const listing = res.data.listing;
+          console.log(listing);
+          
+          if (listing.id !== state.currentProductInfo.id){
+            dispatch({ type: Actions.productInfo.updateID, id:listing.id});
+          }
+          
+        });
+
+      }
+
+    }
+  }
+
+  const getNext = (currentPath)=>{
+    
     if (currentPath.includes('/listing/new/productInfo')){
       return '/listing/new/locationForm';
     }
@@ -111,7 +145,7 @@ const NavBar = (props) => {
             <MenuLink to="/listing/new/fulfillmentForm" label="5.Fulfillment" />
           </Col>
 
-          <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}}>
+          <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>
             <Col md={{span:1,offset:0}}><Button>Next</Button></Col>
           </NavLink>
 

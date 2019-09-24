@@ -4,6 +4,9 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { geocodeByPlaceId} from 'react-google-places-autocomplete';
 import loadGooglePlaces from '../../utils/loadGooglePlaces';
 import Map from '../../components/map';
+import {StateContext,DispatchContext} from '../../redux/contexts';
+import Actions from '../../redux/actions';
+
 
 const getLatLong = (id) => {
     console.log(id)
@@ -14,6 +17,12 @@ const getLatLong = (id) => {
 
 
 const LocationForm = () => {
+
+  
+    const globalState = React.useContext(StateContext);
+    const dispatch = React.useContext(DispatchContext);
+
+    console.log(globalState.currentListing);
 
     const removeArea = (obj)=>{
         console.log("remove");

@@ -32,7 +32,8 @@ function App() {
 
   const [state, dispatch] = useCombinedReducers({
     subscriptions: React.useReducer(reducers.listingReducer, globalState.subscriptions),
-    currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo)
+    currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo),
+    currentListing: React.useReducer(reducers.currentListingIDReducer, globalState.currentListing),
   });
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();

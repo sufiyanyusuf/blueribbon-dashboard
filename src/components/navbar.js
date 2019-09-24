@@ -54,11 +54,12 @@ const NavBar = (props) => {
   }
 
   const nextPressed = (currentPath)=>{
+
     if (currentPath.includes('/listing/new/productInfo')){
 
       console.log('gonna request, prestate - ',state.currentProductInfo);
 
-      if (state.currentProductInfo.id === ''){
+      if (state.currentListing.id === ''){
 
         axios.post('http://localhost:4000/listing/create', {
           title:state.currentProductInfo.title,
@@ -68,16 +69,22 @@ const NavBar = (props) => {
         }).then(res =>{
           const listing = res.data.listing;
           console.log(listing);
-          
+
           if (listing.id !== state.currentProductInfo.id){
             dispatch({ type: Actions.productInfo.updateID, id:listing.id});
           }
+
+          if (listing.id !== state.currentListingID){
+            dispatch({ type: Actions.listing.updateCurrentListingID, id:listing.id});
+          }
           
         });
-
+      }else{
+        console.log('update product info for listing id',state.currentListing.id)
       }
 
     }
+
   }
 
   const getNext = (currentPath)=>{

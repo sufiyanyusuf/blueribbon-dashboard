@@ -8,7 +8,7 @@ const actions = {
         updateProductInfo:"UPDATE_PRODUCTINFO",
     },
     listing : {
-        currentSubscription:"CURRENT_SUBSCRIPTION",
+        updateCurrentListingID:"UPDATE_CURRENT_LISTING",
         updateAll:'INITIALIZED'
     }
 }

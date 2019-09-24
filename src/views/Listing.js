@@ -31,7 +31,7 @@ const Listing = () => {
           }
         });
 
-          //check for change before dispatch
+        //check for change before dispatch
         if (JSON.stringify(_listings)!==JSON.stringify(state.subscriptions)){
           dispatch({ type: Actions.listing.updateAll, listings:_listings});
         }

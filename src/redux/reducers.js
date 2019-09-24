@@ -38,7 +38,7 @@ const todoReducer = (state, action) => {
 
   const listingReducer = (state, action) => {
     switch (action.type) {
-    case Actions.listing.currentSubscription:
+    case Actions.listing.currentListing:
         return ({
             key: action.id,
             date: action.date,
@@ -50,6 +50,18 @@ const todoReducer = (state, action) => {
         return action.listings;
     default:
         return state;
+    }
+  };
+
+  const currentListingIDReducer = (state, action) => {
+    switch (action.type){
+
+        case Actions.listing.updateCurrentListingID:
+            return ({
+                id: action.id
+            });
+        default:
+            return state;
     }
   };
 
@@ -92,7 +104,8 @@ const todoReducer = (state, action) => {
   const reducers = {
       "todoReducer":todoReducer,
       "listingReducer":listingReducer,
-      "productInfoReducer":productInfoReducer
+      "productInfoReducer":productInfoReducer,
+      'currentListingIDReducer':currentListingIDReducer,
   };
 
   export default reducers;

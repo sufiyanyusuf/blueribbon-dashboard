@@ -7,7 +7,7 @@ const NewTextfieldForm = (props) => {
   const modifierPrompt = useRef(null);
   const modifierMandatory = useRef(null);
   const modifierType = useRef(null);
-
+  const modifierPlaceholder = useRef(null);
   return (
     
     <Container>
@@ -39,6 +39,17 @@ const NewTextfieldForm = (props) => {
               <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                   <Form.Label>Modifier Prompt</Form.Label>
                   <Form.Control placeholder="Modifier Prompt" ref={modifierPrompt}/>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <div style={styles.spacer20}></div>
+
+          <Row>
+            <Col>
+              <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+                  <Form.Label>Placeholder</Form.Label>
+                  <Form.Control placeholder="Placeholder for textfield" ref={modifierPlaceholder}/>
               </Form.Group>
             </Col>
           </Row>
@@ -85,7 +96,8 @@ const NewTextfieldForm = (props) => {
               prompt:modifierPrompt.current.value,
               mandatory:modifierMandatory.current.checked,
               type:modifierType.current.value,
-              element:"Textfield"
+              element:"Textfield",
+              placeholder:modifierPlaceholder.current.value
               })} 
             }>Save & Close</Button>
           </Row>

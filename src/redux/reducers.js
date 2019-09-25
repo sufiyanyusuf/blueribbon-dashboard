@@ -69,9 +69,9 @@ import Actions from './actions';
 
   const modifierReducer = (state,action) => {
     switch (action.type){
-      case Actions.modifier.addNewModifier:
+      case Actions.modifier.setModifiers:
         console.log(state)
-        return state.concat(action.modifiers);
+        return action.modifiers;
       default:
         return state;
     }

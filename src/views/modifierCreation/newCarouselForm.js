@@ -18,7 +18,7 @@ const NewCarouselForm = (props) => {
       key:choiceList.length+1,
       order:choiceList.length+1,
       title:obj.title, 
-      pricing:obj.pricing,
+      pricing_impact:obj.pricing,
       explainer:obj.explainer,
       icon:obj.icon 
     }]))

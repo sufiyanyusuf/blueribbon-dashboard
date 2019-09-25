@@ -12,7 +12,7 @@ const actions = {
         updateAll:'INITIALIZED'
     },
     modifier:{
-        addNewModifier:'ADD_NEW_MODIFIER',
+        setModifiers:'SET_MODIFIERS',
     }
 }
 

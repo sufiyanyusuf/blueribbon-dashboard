@@ -25,8 +25,13 @@ const ModifierForm = () => {
 
     useEffect(() => {
         // Fetch lists
+        getModifiers()
+    });
+
+    function getModifiers(){
+
         console.log('get mods')
-        axios.get('http://localhost:4000/modifier/46')//+globalState.currentListing.id)
+        axios.get('http://localhost:4000/modifier/'+globalState.currentListing.id)
         .then(res => {
             console.log(res.data);
             //update store
@@ -44,10 +49,10 @@ const ModifierForm = () => {
 
             //check for change before dispatch
             if (JSON.stringify(_modifiers)!==JSON.stringify(globalState.currentModifiers)){
-            dispatch({ type: Actions.modifier.addNewModifier, modifiers:_modifiers});
+            dispatch({ type: Actions.modifier.setModifiers, modifiers:_modifiers});
             }
         })
-    });
+    }
 
     function ModifierList(props) {
         const items = props.items;
@@ -69,14 +74,36 @@ const ModifierForm = () => {
         setCarouselFormVisible(false);
         setOptionListFormVisible(false);
         
-        // updateModifierList(modifiers.concat([{
-        //     key:modifiers.length+1,
-        //     order:modifiers.length+1,
-        //     title:obj.title, 
-        //     element:obj.element,
-        //     type:"type",
-        //     default:""}]))
-            
+   
+        if (globalState.currentListing.id && globalState.currentListing.id != ''){
+
+            // {title: "test", prompt: "test", mandatory: true, type: "Product", element: "Textfield"}
+
+            axios.post('http://localhost:4000/modifier/create', {
+              title:obj.title,
+              listing_id:globalState.currentListing.id,
+              description:obj.prompt,
+              type:obj.type,
+              element_type:obj.element,
+              order: globalState.currentModifiers.length + 1,
+
+              mandatory:obj.mandatory,
+
+              max_value:obj.maxValue,
+              min_value:obj.minValue,
+              price_multiplier:obj.pricePerUnit,
+
+              placeholder:obj.placeholder,
+
+              choices:obj.choices,
+              
+            }).then(res =>{
+              const mod = res.data.modifier;
+              console.log(mod);
+              getModifiers();
+            });
+        }
+        
         console.log(obj)
     }
 
@@ -91,7 +118,6 @@ const ModifierForm = () => {
         // })
         // updateModifierList(reorderedModifiers);
     }
-
 
     return (
         <Container>

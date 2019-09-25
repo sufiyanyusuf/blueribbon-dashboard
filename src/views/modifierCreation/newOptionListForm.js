@@ -132,7 +132,7 @@ const NewOptionListForm = (props) => {
                 description:modifierPrompt.current.value,
                 mandatory:modifierMandatory.current.checked,
                 type:modifierType.current.value,
-                element_type:"Option List",
+                element:"Option List",
                 choices:choiceList
                 })} 
               }>Save & Close</Button>

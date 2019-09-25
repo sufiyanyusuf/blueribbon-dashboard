@@ -56,6 +56,7 @@ const NavBar = (props) => {
   const nextPressed = (currentPath)=>{
 
     if (currentPath.includes('/listing/new/productInfo')){
+      
 
       console.log('gonna request, prestate - ',state.currentProductInfo);
 

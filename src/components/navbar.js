@@ -8,7 +8,7 @@ import { ReactComponent as Logo } from '../assets/img/logo.svg';
 import {StateContext,DispatchContext} from '../redux/contexts';
 import Actions from '../redux/actions';
 import axios from 'axios';
-
+import Api from '../utils/endpoints'
 const NavBar = (props) => {
 
   const showNewSubNav = props.location.pathname.includes('/listing/new');
@@ -61,7 +61,7 @@ const NavBar = (props) => {
 
       if (state.currentListing.id === ''){
 
-        axios.post('http://localhost:4000/listing/create', {
+        axios.post(Api().createListing, {
           title:state.currentProductInfo.title,
           org_id:2,
           description:state.currentProductInfo.description,

@@ -9,6 +9,8 @@ import {StateContext,DispatchContext} from '../redux/contexts';
 import axios from 'axios';
 import uuid from 'uuid/v4';
 import Actions from '../redux/actions';
+import Api from '../utils/endpoints'
+
 
 const Listing = () => {
 
@@ -16,9 +18,11 @@ const Listing = () => {
   const dispatch = React.useContext(DispatchContext);
   const { loading, user } = useAuth0();
 
+
   useEffect(() => {
     // Fetch lists
-    axios.get('http://localhost:4000/organizations/listing/2')
+    console.log(Api().getListing);
+    axios.get(Api().getListing)
       .then(res => {
         const listings = res.data[0].listings;
         let _listings = listings.map((listing) => {

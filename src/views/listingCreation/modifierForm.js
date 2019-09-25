@@ -12,6 +12,8 @@ import NewTextfieldForm from "../../views/modifierCreation/newTextfieldForm";
 import axios from 'axios';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
+import Api from '../../utils/endpoints'
+
 
 const ModifierForm = () => {  
 
@@ -30,8 +32,8 @@ const ModifierForm = () => {
 
     function getModifiers(){
 
-        console.log('get mods')
-        axios.get('http://localhost:4000/modifier/'+globalState.currentListing.id)
+        console.log('get mods') 
+        axios.get(Api(globalState.currentListing.id).getModifiers)
         .then(res => {
             console.log(res.data);
             //update store
@@ -79,7 +81,7 @@ const ModifierForm = () => {
 
             // {title: "test", prompt: "test", mandatory: true, type: "Product", element: "Textfield"}
 
-            axios.post('http://localhost:4000/modifier/create', {
+            axios.post(Api().createModifier(), {
               title:obj.title,
               listing_id:globalState.currentListing.id,
               description:obj.prompt,

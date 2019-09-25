@@ -10,6 +10,9 @@ const actions = {
     listing : {
         updateCurrentListingID:"UPDATE_CURRENT_LISTING",
         updateAll:'INITIALIZED'
+    },
+    modifier:{
+        addNewModifier:'ADD_NEW_MODIFIER',
     }
 }
 

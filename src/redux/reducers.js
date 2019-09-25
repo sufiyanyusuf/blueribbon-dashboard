@@ -1,38 +1,6 @@
 
 import React, { Component,useReducer } from 'react';
-import initialTodos from './state';
 import Actions from './actions';
-import { Action } from 'rxjs/internal/scheduler/Action';
-
-  
-const todoReducer = (state, action) => {
-    switch (action.type) {
-      case 'DO_TODO':
-        return state.map(todo => {
-          if (todo.id === action.id) {
-            return { ...todo, complete: true };
-          } else {
-            return todo;
-          }
-        });
-      case 'UNDO_TODO':
-        return state.map(todo => {
-          if (todo.id === action.id) {
-            return { ...todo, complete: false };
-          } else {
-            return todo;
-          }
-        });
-      case 'ADD_TODO':
-        return state.concat({
-          task: action.task,
-          id: action.id,
-          complete: false,
-        });
-      default:
-        return state;
-    }
-  };
 
 //   {key:1,date:"date",title:"title",status:"live",count:"232"},
 
@@ -58,7 +26,7 @@ const todoReducer = (state, action) => {
 
         case Actions.listing.updateCurrentListingID:
             return ({
-                id: action.id
+              id: action.id
             });
         default:
             return state;
@@ -99,13 +67,21 @@ const todoReducer = (state, action) => {
     }
   };
 
-
+  const modifierReducer = (state,action) => {
+    switch (action.type){
+      case Actions.modifier.addNewModifier:
+        console.log(state)
+        return state.concat(action.modifiers);
+      default:
+        return state;
+    }
+  };
 
   const reducers = {
-      "todoReducer":todoReducer,
       "listingReducer":listingReducer,
       "productInfoReducer":productInfoReducer,
       'currentListingIDReducer':currentListingIDReducer,
+      'modifierReducer':modifierReducer,
   };
 
   export default reducers;

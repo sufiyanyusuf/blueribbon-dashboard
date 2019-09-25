@@ -18,7 +18,7 @@ const NewOptionListForm = (props) => {
       key:choiceList.length+1,
       order:choiceList.length+1,
       title:obj.title, 
-      pricing:obj.pricing,
+      pricing_impact:obj.pricing,
       explainer:obj.explainer
     }]))
         
@@ -35,7 +35,6 @@ const NewOptionListForm = (props) => {
   }
 
 
-   
   return (
     <Container>
 
@@ -130,10 +129,10 @@ const NewOptionListForm = (props) => {
             <Row>
               <Button onClick = { () => {props.addModifier({
                 title:modifierTitle.current.value,
-                prompt:modifierPrompt.current.value,
+                description:modifierPrompt.current.value,
                 mandatory:modifierMandatory.current.checked,
                 type:modifierType.current.value,
-                element:"Option List",
+                element_type:"Option List",
                 choices:choiceList
                 })} 
               }>Save & Close</Button>

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Container,Row,Col,Modal,Button} from "react-bootstrap";
 import Tile from "../../components/tile";
 import {NavLink} from 'react-router-dom';
@@ -9,12 +9,45 @@ import NewCarouselForm from "../../views/modifierCreation/newCarouselForm";
 import NewStepperForm from "../../views/modifierCreation/newStepperForm";
 import NewTextfieldForm from "../../views/modifierCreation/newTextfieldForm";
 
+import axios from 'axios';
+import {StateContext,DispatchContext} from '../../redux/contexts';
+import Actions from '../../redux/actions';
+
 const ModifierForm = () => {  
 
   const [showOptionListForm, setOptionListFormVisible] = useState(false);
   const [showCarouselForm, setCarouselFormVisible] = useState(false);
   const [showStepperForm, setStepperFormVisible] = useState(false);
   const [showTextfieldForm, setTextfieldFormVisible] = useState(false);
+
+  const globalState = React.useContext(StateContext);
+  const dispatch = React.useContext(DispatchContext);
+
+    useEffect(() => {
+        // Fetch lists
+        console.log('get mods')
+        axios.get('http://localhost:4000/modifier/46')//+globalState.currentListing.id)
+        .then(res => {
+            console.log(res.data);
+            //update store
+            const modifiers = res.data;
+            let _modifiers = modifiers.map((modifier) => {
+            return {
+                key: modifier.id,
+                title: modifier.title,
+                element:modifier.element_type,
+                type:modifier.type,
+                default:modifier.default,
+                order: modifier.order
+            }
+            });
+
+            //check for change before dispatch
+            if (JSON.stringify(_modifiers)!==JSON.stringify(globalState.currentModifiers)){
+            dispatch({ type: Actions.modifier.addNewModifier, modifiers:_modifiers});
+            }
+        })
+    });
 
     function ModifierList(props) {
         const items = props.items;
@@ -26,8 +59,8 @@ const ModifierForm = () => {
         );
     }
 
-    const defaultModifiers = [{key:1,order:"1",title:"title",element:"element",type:"type",default:"default"},{key:2,order:"2",title:"title",element:"element",type:"type",default:"default"}];
-    const [modifiers, updateModifierList] = useState(defaultModifiers);
+    // const defaultModifiers = [{key:1,order:"1",title:"title",element:"element",type:"type",default:"default"},{key:2,order:"2",title:"title",element:"element",type:"type",default:"default"}];
+    // const [modifiers, updateModifierList] = useState(defaultModifiers);
 
     const addModifier = (obj) => {
 
@@ -36,27 +69,27 @@ const ModifierForm = () => {
         setCarouselFormVisible(false);
         setOptionListFormVisible(false);
         
-        updateModifierList(modifiers.concat([{
-            key:modifiers.length+1,
-            order:modifiers.length+1,
-            title:obj.title, 
-            element:obj.element,
-            type:"type",
-            default:""}]))
+        // updateModifierList(modifiers.concat([{
+        //     key:modifiers.length+1,
+        //     order:modifiers.length+1,
+        //     title:obj.title, 
+        //     element:obj.element,
+        //     type:"type",
+        //     default:""}]))
             
         console.log(obj)
     }
 
     const removeModifier = (obj) => {
-        var _modifiers = modifiers.filter(modifier=>modifier.key !== obj.key);
-        //reassign order
-        var count = 1;
-        var reorderedModifiers = _modifiers.map((modifier)=>{
-            modifier.order = count;
-            count+=1;
-            return modifier;
-        })
-        updateModifierList(reorderedModifiers);
+        // var _modifiers = modifiers.filter(modifier=>modifier.key !== obj.key);
+        // //reassign order
+        // var count = 1;
+        // var reorderedModifiers = _modifiers.map((modifier)=>{
+        //     modifier.order = count;
+        //     count+=1;
+        //     return modifier;
+        // })
+        // updateModifierList(reorderedModifiers);
     }
 
 
@@ -179,7 +212,7 @@ const ModifierForm = () => {
 
         <div style = {styles.leftTextAlign}>
             <ListHeader/>
-            <ModifierList items={modifiers} remove = {removeModifier}/>
+            <ModifierList items={globalState.currentModifiers} remove = {removeModifier}/>
         </div>
 
 

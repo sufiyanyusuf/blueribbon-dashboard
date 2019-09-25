@@ -34,6 +34,7 @@ function App() {
     subscriptions: React.useReducer(reducers.listingReducer, globalState.subscriptions),
     currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo),
     currentListing: React.useReducer(reducers.currentListingIDReducer, globalState.currentListing),
+    currentModifiers: React.useReducer(reducers.modifierReducer, globalState.currentModifiers),
   });
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();

@@ -2,7 +2,7 @@
 const Endpoints = (params) => {
 
     const environment = process.env.NODE_ENV;
-
+    console.log('environment - ',environment)
     if (environment == 'development'){
         return {
             getListing:'http://localhost:4000/organizations/listing/2',

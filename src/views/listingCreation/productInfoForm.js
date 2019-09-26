@@ -1,9 +1,11 @@
-import React,{useState,useRef} from "react";
+import React,{useEffect,useRef} from "react";
 import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-bootstrap";
 import Tile from "../../components/tile";
 import {NavLink} from 'react-router-dom';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
+import axios from 'axios';
+import Api from '../../utils/endpoints';
 
 const ProductInfoForm = () => {
   
@@ -13,6 +15,26 @@ const ProductInfoForm = () => {
   const titleRef = useRef(null);
   const unitRef = useRef(null);
   const descriptionRef = useRef(null);
+
+  useEffect(() => {
+    if (state.currentListing.id !== ''){
+      axios.get(Api(state.currentListing.id).getProductInfo)
+      .then(res => {
+        let productInfo = {
+          id:res.data.id,
+          title: res.data.title,
+          description:res.data.description, 
+          unit:res.data.unit_title,
+          type:res.data.type,
+          listing_id:res.data.listing_id
+        }
+        if (state.currentProductInfo.id !== productInfo.id){
+          dispatch({type:Actions.productInfo.updateProductInfo,productInfo:productInfo});
+        }
+        });
+    }
+  
+  });
 
   const updateTitle = () => {
     console.log(state);
@@ -38,7 +60,7 @@ const ProductInfoForm = () => {
       console.log('updated description',state.currentProductInfo.description);
     }
   };
-
+  console.log(state.currentProductInfo);
   return (
     <Container>
 

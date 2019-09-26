@@ -21,9 +21,8 @@ const ListItem = (props) => {
 
     const subscription = props.subscription;
 
-
     return (
-        <Link to="/profile" id={subscription.key} style={{ textDecoration: 'none' }} >
+        <Link to="/listing/edit/productInfo" id={subscription.key} style={{ textDecoration: 'none' }} >
             <StyledRow key={subscription.key} onClick = {props.selected}>
                 <Row>
                     <Col>{subscription.date}</Col>

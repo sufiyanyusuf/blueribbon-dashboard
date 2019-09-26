@@ -60,11 +60,11 @@ function App() {
               <PrivateRoute exact path="/" component={Listing} />
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute path="/profile" component={Profile} />
-              <Route path="/listing/new/locationForm" component={LocationForm} />
-              <Route path="/listing/new/modifierForm" component={ModifierForm} />
-              <Route path="/listing/new/pricingForm" component={PricingForm} />
-              <Route path="/listing/new/fulfillmentForm" component={FulfillmentForm} />
-              <Route path="/listing/new/productInfo" component={ProductInfoForm} />
+              <Route path="/listing/edit/locationForm" component={LocationForm} />
+              <Route path="/listing/edit/modifierForm" component={ModifierForm} />
+              <Route path="/listing/edit/pricingForm" component={PricingForm} />
+              <Route path="/listing/edit/fulfillmentForm" component={FulfillmentForm} />
+              <Route path="/listing/edit/productInfo" component={ProductInfoForm} />
               <Route path="/login" component={Login} />
             </Switch>
           </Router>

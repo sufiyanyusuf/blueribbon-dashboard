@@ -81,7 +81,7 @@ const ModifierForm = () => {
 
             // {title: "test", prompt: "test", mandatory: true, type: "Product", element: "Textfield"}
 
-            axios.post(Api().createModifier(), {
+            axios.post(Api().createModifier, {
               title:obj.title,
               listing_id:globalState.currentListing.id,
               description:obj.prompt,
@@ -153,7 +153,7 @@ const ModifierForm = () => {
         >
             <Modal.Header>
                 <Modal.Title style={{paddingTop:10,paddingLeft:20}}>Create A Carousel</Modal.Title>
-                <Button onClick={() => setCarouselFormVisible(false)}>Save & Close</Button>
+                <Button onClick={() => setCarouselFormVisible(false)}>Cancel</Button>
             </Modal.Header>
 
             <Modal.Body>

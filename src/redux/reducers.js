@@ -36,9 +36,9 @@ import Actions from './actions';
   const productInfoReducer = (state,action) => {
 
     var info = Object.assign({},state);
-    console.log(state, info);
     switch (action.type) {
-        case Actions.productInfo.updateProductInfo:
+        case Actions.productInfo.updateProductInfo:      
+            console.log(action, state, info);
             return action.productInfo;
 
         case Actions.productInfo.updateTitle:
@@ -59,7 +59,6 @@ import Actions from './actions';
                 return info;
 
         case Actions.productInfo.update:
-            info = action;
             return info;
 
         default:

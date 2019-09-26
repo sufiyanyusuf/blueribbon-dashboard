@@ -11,7 +11,7 @@ import axios from 'axios';
 import Api from '../utils/endpoints'
 const NavBar = (props) => {
 
-  const showNewSubNav = props.location.pathname.includes('/listing/new');
+  const showNewSubNav = props.location.pathname.includes('/listing/edit');
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const state = React.useContext(StateContext);
@@ -55,7 +55,7 @@ const NavBar = (props) => {
 
   const nextPressed = (currentPath)=>{
 
-    if (currentPath.includes('/listing/new/productInfo')){
+    if (currentPath.includes('/listing/edit/productInfo')){
       
 
       console.log('gonna request, prestate - ',state.currentProductInfo);
@@ -90,23 +90,23 @@ const NavBar = (props) => {
 
   const getNext = (currentPath)=>{
     
-    if (currentPath.includes('/listing/new/productInfo')){
-      return '/listing/new/locationForm';
+    if (currentPath.includes('/listing/edit/productInfo')){
+      return '/listing/locationForm';
     }
 
-    if (currentPath.includes('/listing/new/locationForm')){
-      return '/listing/new/modifierForm';
+    if (currentPath.includes('/listing/edit/locationForm')){
+      return '/listing/modifierForm';
     }
 
-    if (currentPath.includes('/listing/new/modifierForm')){
-      return '/listing/new/pricingForm';
+    if (currentPath.includes('/listing/edit/modifierForm')){
+      return '/listing/pricingForm';
     }
 
-    if (currentPath.includes('/listing/new/pricingForm')){
-      return '/listing/new/fulfillmentForm';
+    if (currentPath.includes('/listing/edit/pricingForm')){
+      return '/listing/fulfillmentForm';
     }
 
-    if (currentPath.includes('/listing/new/fulfillmentForm')){
+    if (currentPath.includes('/listing/edit/fulfillmentForm')){
       return '/';
     }
 
@@ -146,11 +146,11 @@ const NavBar = (props) => {
           </NavLink>
 
           <Col md={{span:10,offset:0}} style={styles.navbarLinks}>
-            <MenuLink to="/listing/new/productInfo" label="1.Product Info" />
-            <MenuLink to="/listing/new/locationForm" label="2.Locations" />
-            <MenuLink to="/listing/new/modifierForm" label="3.Modifiers" />
-            <MenuLink to="/listing/new/pricingForm" label="4.Pricing" />
-            <MenuLink to="/listing/new/fulfillmentForm" label="5.Fulfillment" />
+            <MenuLink to="/listing/edit/productInfo" label="1.Product Info" />
+            <MenuLink to="/listing/edit/locationForm" label="2.Locations" />
+            <MenuLink to="/listing/edit/modifierForm" label="3.Modifiers" />
+            <MenuLink to="/listing/edit/pricingForm" label="4.Pricing" />
+            <MenuLink to="/listing/edit/fulfillmentForm" label="5.Fulfillment" />
           </Col>
 
           <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>

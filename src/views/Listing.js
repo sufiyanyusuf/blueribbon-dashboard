@@ -7,9 +7,8 @@ import ListItem from "../components/subscriptionListItem";
 import {NavLink} from 'react-router-dom';
 import {StateContext,DispatchContext} from '../redux/contexts';
 import axios from 'axios';
-import uuid from 'uuid/v4';
 import Actions from '../redux/actions';
-import Api from '../utils/endpoints'
+import Api from '../utils/endpoints';
 
 
 const Listing = () => {
@@ -39,6 +38,10 @@ const Listing = () => {
         if (JSON.stringify(_listings)!==JSON.stringify(state.subscriptions)){
           dispatch({ type: Actions.listing.updateAll, listings:_listings});
         }
+
+        if (state.currentListing.id !== ''){
+          dispatch({type:Actions.listing.updateCurrentListingID,id:''});
+        }
         
       })
   });
@@ -52,11 +55,18 @@ const Listing = () => {
     );
   }
 
+  const selectListing = (id) => {
+    console.log(id);
+    if (state.currentListing.id !== id){
+      dispatch({type:Actions.listing.updateCurrentListingID,id:id});
+    }
+  }
+
   function SubscriptionList(props) {
     const subscriptions = state.subscriptions;
     const listItems = subscriptions.map((subscription) =>
      
-      <ListItem key= {subscription.key} subscription={subscription} selected={()=>console.log("clicked",subscription.key)}/>
+      <ListItem key= {subscription.key} subscription={subscription} selected={()=>selectListing(subscription.key)}/>
 
     );
     return (
@@ -80,12 +90,12 @@ const Listing = () => {
       <div style={styles.spacer20}></div>
       <Row>
         <Col>
-          <NavLink to="/listing/new/productInfo" style={{textDecoration:"none"}}>
+          <NavLink to="/listing/edit/productInfo" style={{textDecoration:"none"}}>
             <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Coupons, On Demand" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
          </Col>
         <Col>
-          <NavLink to="/listing/new/productInfo" style={{textDecoration:"none"}}>
+          <NavLink to="/listing/edit/productInfo" style={{textDecoration:"none"}}>
             <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Scheduled, Recurring" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
         </Col>

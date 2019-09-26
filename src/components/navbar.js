@@ -57,7 +57,6 @@ const NavBar = (props) => {
 
     if (currentPath.includes('/listing/edit/productInfo')){
       
-
       console.log('gonna request, prestate - ',state.currentProductInfo);
 
       if (state.currentListing.id === ''){
@@ -72,7 +71,7 @@ const NavBar = (props) => {
           console.log(listing);
 
           if (listing.id !== state.currentProductInfo.id){
-            dispatch({ type: Actions.productInfo.updateID, id:listing.id});
+            dispatch({ type: Actions.productInfo.updateID, id:listing.productInfo.id});
           }
 
           if (listing.id !== state.currentListingID){
@@ -82,6 +81,18 @@ const NavBar = (props) => {
         });
       }else{
         console.log('update product info for listing id',state.currentListing.id)
+        
+        axios.put(Api().updateProductInfo, {
+          title:state.currentProductInfo.title,
+          org_id:2,
+          description:state.currentProductInfo.description,
+          type:'product',
+          listing_id:state.currentListing.id
+        }).then(res =>{
+          console.log('updation response',res)
+          //show feedback toast
+        });
+
       }
 
     }
@@ -91,19 +102,19 @@ const NavBar = (props) => {
   const getNext = (currentPath)=>{
     
     if (currentPath.includes('/listing/edit/productInfo')){
-      return '/listing/locationForm';
+      return '/listing/edit/locationForm';
     }
 
     if (currentPath.includes('/listing/edit/locationForm')){
-      return '/listing/modifierForm';
+      return '/listing/edit/modifierForm';
     }
 
     if (currentPath.includes('/listing/edit/modifierForm')){
-      return '/listing/pricingForm';
+      return '/listing/edit/pricingForm';
     }
 
     if (currentPath.includes('/listing/edit/pricingForm')){
-      return '/listing/fulfillmentForm';
+      return '/listing/edit/fulfillmentForm';
     }
 
     if (currentPath.includes('/listing/edit/fulfillmentForm')){
@@ -146,11 +157,11 @@ const NavBar = (props) => {
           </NavLink>
 
           <Col md={{span:10,offset:0}} style={styles.navbarLinks}>
-            <MenuLink to="/listing/edit/productInfo" label="1.Product Info" />
-            <MenuLink to="/listing/edit/locationForm" label="2.Locations" />
-            <MenuLink to="/listing/edit/modifierForm" label="3.Modifiers" />
-            <MenuLink to="/listing/edit/pricingForm" label="4.Pricing" />
-            <MenuLink to="/listing/edit/fulfillmentForm" label="5.Fulfillment" />
+            <MenuLink to="/listing/edit/productInfo/" label="1.Product Info" />
+            <MenuLink to="/listing/edit/locationForm/" label="2.Locations" />
+            <MenuLink to="/listing/edit/modifierForm/" label="3.Modifiers" />
+            <MenuLink to="/listing/edit/pricingForm/" label="4.Pricing" />
+            <MenuLink to="/listing/edit/fulfillmentForm/" label="5.Fulfillment" />
           </Col>
 
           <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>

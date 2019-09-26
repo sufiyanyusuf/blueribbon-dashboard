@@ -76,7 +76,7 @@ const ModifierForm = () => {
         setCarouselFormVisible(false);
         setOptionListFormVisible(false);
         
-   
+        
         if (globalState.currentListing.id && globalState.currentListing.id != ''){
 
             // {title: "test", prompt: "test", mandatory: true, type: "Product", element: "Textfield"}
@@ -110,15 +110,11 @@ const ModifierForm = () => {
     }
 
     const removeModifier = (obj) => {
-        // var _modifiers = modifiers.filter(modifier=>modifier.key !== obj.key);
-        // //reassign order
-        // var count = 1;
-        // var reorderedModifiers = _modifiers.map((modifier)=>{
-        //     modifier.order = count;
-        //     count+=1;
-        //     return modifier;
-        // })
-        // updateModifierList(reorderedModifiers);
+        axios.delete(Api(obj.key).removeModifier)
+        .then(res => {
+            console.log(res);
+            getModifiers();
+        })
     }
 
     return (

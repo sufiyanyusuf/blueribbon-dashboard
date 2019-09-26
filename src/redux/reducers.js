@@ -53,7 +53,6 @@ import Actions from './actions';
             info.unit = action.unit;
             return info;
 
-
         case Actions.productInfo.updateID:
                 info.id = action.id;
                 return info;

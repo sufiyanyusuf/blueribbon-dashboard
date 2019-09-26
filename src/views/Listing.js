@@ -90,12 +90,12 @@ const Listing = () => {
       <div style={styles.spacer20}></div>
       <Row>
         <Col>
-          <NavLink to="/listing/edit/productInfo" style={{textDecoration:"none"}}>
+          <NavLink to="/listing/edit/productInfo/" style={{textDecoration:"none"}}>
             <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Coupons, On Demand" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
          </Col>
         <Col>
-          <NavLink to="/listing/edit/productInfo" style={{textDecoration:"none"}}>
+          <NavLink to="/listing/edit/productInfo/" style={{textDecoration:"none"}}>
             <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Scheduled, Recurring" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
         </Col>

@@ -9,6 +9,8 @@ const Endpoints = (params) => {
             getModifiers:'http://localhost:4000/modifier/'+params,
             createModifier:'http://localhost:4000/modifier/create',
             getProductInfo:'http://localhost:4000/productInfo/'+params,
+            removeModifier:'http://localhost:4000/modifier/'+params,
+            updateProductInfo:'http://localhost:4000/listing/updateInfo'
         }
     }else{
         return {
@@ -17,6 +19,8 @@ const Endpoints = (params) => {
             getModifiers:'https://blue-ribbon.herokuapp.com/modifier/'+params,
             createModifier:'https://blue-ribbon.herokuapp.com/modifier/create',
             getProductInfo:'https://blue-ribbon.herokuapp.com/productInfo/'+params,
+            removeModifier:'https://blue-ribbon.herokuapp.com/modifier/'+params,
+            updateProductInfo:'https://blue-ribbon.herokuapp.com/listing/updateInfo'
         }
     }
 }

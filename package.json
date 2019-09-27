@@ -52,12 +52,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:4000",
-      "pathRewrite": {
-        "^/api": "/"
-      }
-    }
-  }
+  "proxy": "http://localhost:4000"
 }

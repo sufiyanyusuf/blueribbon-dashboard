@@ -16,12 +16,12 @@ const NewStepperForm = (props) => {
       <div style={styles.spacer80}></div>
 
       <Row>
-        <h2>
+        <h1>
           About This Stepper
-        </h2>
+        </h1>
       </Row>
 
-      <div style={styles.spacer20}></div>
+      <div style={styles.spacer80}></div>
 
         <Form>
 

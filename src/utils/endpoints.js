@@ -2,13 +2,13 @@
 const Endpoints = (params) => {
 
     return {
-        getListing:'/organizations/listing/2',
-        createListing:'/listing/create',
-        getModifiers:'/modifier/'+params,
-        createModifier:'/modifier/create',
-        getProductInfo:'/productInfo/'+params,
-        removeModifier:'/modifier/'+params,
-        updateProductInfo:'/listing/updateInfo'
+        getListing:'/api/organizations/listing/2',
+        createListing:'/api/listing/create',
+        getModifiers:'/api/modifier/'+params,
+        createModifier:'/api/modifier/create',
+        getProductInfo:'/api/productInfo/'+params,
+        removeModifier:'/api/modifier/'+params,
+        updateProductInfo:'/api/listing/updateInfo'
     }
    
 }

@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "TTCommons-Bold";
+  src: url("../assets/fonts/TTCommons-Bold.ttf") format("truetype"); }
+
+h1 {
+  font-family: TTCommons-Bold;
+  font-size: 72px;
+  color: #000000;
+  letter-spacing: 0; }

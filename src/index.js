@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import config from "./auth_config.json";
+import './styles/_global_style.scss';
 
 // A function that routes the user to the right place
 // after login

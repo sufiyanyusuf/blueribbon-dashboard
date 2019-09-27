@@ -1,0 +1,17 @@
+@import 'mixins';
+
+@include font-face(TTCommons-Bold, "../assets/fonts/TTCommons-Bold", null, null, ttf);
+@include font-face(TTCommons-Regular, "../assets/fonts/TTCommons-Regular", null, null, ttf);
+
+$primary-color: #0A71F2;
+
+h1 {
+    font-family: TTCommons-Bold;
+    font-size: 72px;
+    color: #000000;
+}
+
+h3 {
+    font-family: TTCommons-Regular;
+    font-size: 36px;
+}

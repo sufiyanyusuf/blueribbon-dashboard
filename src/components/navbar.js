@@ -86,7 +86,7 @@ const NavBar = (props) => {
           title:state.currentProductInfo.title,
           org_id:2,
           description:state.currentProductInfo.description,
-          type:'product',
+          type:state.currentProductInfo.type,
           listing_id:state.currentListing.id
         }).then(res =>{
           console.log('updation response',res)
@@ -150,25 +150,26 @@ const NavBar = (props) => {
     {(isAuthenticated && showNewSubNav) &&(
 
       <Container fluid={true}>
-        <div style={styles.spacer10}></div>
-        <Row>
-          <NavLink to="/" style={{textDecoration:"none"}}>
-            <Col md={{span:1,offset:0}}><Button variant="danger">Exit</Button></Col>
-          </NavLink>
 
-          <Col md={{span:10,offset:0}} style={styles.navbarLinks}>
-            <MenuLink to="/listing/edit/productInfo/" label="1.Product Info" />
-            <MenuLink to="/listing/edit/locationForm/" label="2.Locations" />
-            <MenuLink to="/listing/edit/modifierForm/" label="3.Modifiers" />
-            <MenuLink to="/listing/edit/pricingForm/" label="4.Pricing" />
-            <MenuLink to="/listing/edit/fulfillmentForm/" label="5.Fulfillment" />
-          </Col>
+          <div style={styles.spacer10}></div>
+            <Row>
+              <NavLink to="/" style={{textDecoration:"none"}}>
+                <Col sm><Button variant="danger">Exit</Button></Col>
+              </NavLink>
 
-          <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>
-            <Col md={{span:1,offset:0}}><Button>Next</Button></Col>
-          </NavLink>
+              <Col sm style={styles.navbarLinks}>
+                <MenuLink to="/listing/edit/productInfo/" label="1.Product Info" />
+                <MenuLink to="/listing/edit/locationForm/" label="2.Locations" />
+                <MenuLink to="/listing/edit/modifierForm/" label="3.Modifiers" />
+                <MenuLink to="/listing/edit/pricingForm/" label="4.Pricing" />
+                <MenuLink to="/listing/edit/fulfillmentForm/" label="5.Fulfillment" />
+              </Col>
 
-        </Row>
+              <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>
+                <Col sm><Button>Next</Button></Col>
+              </NavLink>
+
+            </Row>
         <Row style={styles.navbarBottomDivider}></Row>
       </Container>
 

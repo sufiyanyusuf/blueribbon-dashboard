@@ -35,6 +35,16 @@ const ProductInfoForm = () => {
   
   });
 
+  const updateTypeAsProduct = (status) => {
+    dispatch({ type: Actions.productInfo.updateType, subType:'product'});
+    console.log('updated type',state.currentProductInfo.type);  
+  };
+
+  const updateTypeAsService = (status) => {
+    dispatch({ type: Actions.productInfo.updateType, subType:'service'});
+    console.log('updated type',state.currentProductInfo.type);  
+  };
+
   const updateTitle = () => {
     console.log(state);
     let title = titleRef.current.value;
@@ -59,17 +69,17 @@ const ProductInfoForm = () => {
       console.log('updated description',state.currentProductInfo.description);
     }
   };
-  console.log(state.currentProductInfo);
+ 
   return (
     <Container>
 
     <div style={styles.spacer80}></div>
       <Row>
         <Col>
-            <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "+ New Product" tilePressed = { () => { console.log('pressed') } }/>
+            <Tile icon="Product.svg" title = "+ New Product" tilePressed = { updateTypeAsProduct } selected = {(state.currentProductInfo.type && state.currentProductInfo.type === 'product')} />
          </Col>
         <Col>
-            <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "+ New Service" tilePressed = { () => { console.log('pressed') } }/>
+            <Tile icon="Service.svg" title = "+ New Service" tilePressed = { updateTypeAsService } selected = {(state.currentProductInfo.type && state.currentProductInfo.type === 'service')}/>
          </Col>
       </Row>
       <div style={styles.spacer80}></div>
@@ -112,9 +122,6 @@ const ProductInfoForm = () => {
 
         <div style={styles.spacer20}></div>
 
-        <Button variant="primary" type="submit">
-            Submit
-        </Button>
       </Form>
 
       <div style={styles.spacer80}></div>

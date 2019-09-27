@@ -10,7 +10,6 @@ import axios from 'axios';
 import Actions from '../redux/actions';
 import Api from '../utils/endpoints';
 
-
 const Listing = () => {
 
   const state = React.useContext(StateContext);
@@ -91,12 +90,12 @@ const Listing = () => {
       <Row>
         <Col>
           <NavLink to="/listing/edit/productInfo/" style={{textDecoration:"none"}}>
-            <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Coupons, On Demand" tilePressed = { () => { console.log('pressed') } }/>
+            <Tile icon="Coupon.svg" title = "Coupons, On Demand" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
          </Col>
         <Col>
           <NavLink to="/listing/edit/productInfo/" style={{textDecoration:"none"}}>
-            <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "Scheduled, Recurring" tilePressed = { () => { console.log('pressed') } }/>
+            <Tile icon="Schedule.svg" title = "Scheduled, Recurring" tilePressed = { () => { console.log('pressed') } }/>
           </NavLink>
         </Col>
       </Row>

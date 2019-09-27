@@ -64,9 +64,6 @@ const FulfillmentForm = () => {
 
         <div style={styles.spacer20}></div>
 
-        <Button variant="primary" type="submit">
-            Submit
-        </Button>
       </Form>
 
       <div style={styles.spacer80}></div>

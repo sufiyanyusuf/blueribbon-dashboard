@@ -13,7 +13,7 @@ const ProductInfoForm = () => {
 
       <Row>
         <h1>
-          How Will You Charge Your Customers ?
+          Setup Your Pricing
         </h1>
       </Row>
 
@@ -36,10 +36,6 @@ const ProductInfoForm = () => {
         <div style={styles.spacer20}></div>
 
         <div style={styles.spacer20}></div>
-
-        <Button variant="primary" type="submit">
-            Submit
-        </Button>
       </Form>
 
       <div style={styles.spacer80}></div>

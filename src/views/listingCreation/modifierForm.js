@@ -219,16 +219,16 @@ const ModifierForm = () => {
 
         <Row>
             <Col>
-                <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "New Option List" tilePressed = { () => { setOptionListFormVisible(true) } }/>
+                <Tile icon="Checklist.svg" title = "New Option List" tilePressed = { () => { setOptionListFormVisible(true) } }/>
             </Col>
             <Col>
-                <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "New Carousel" tilePressed = { () => { setCarouselFormVisible(true) } }/>
+                <Tile icon="Carousel.svg" title = "New Carousel" tilePressed = { () => { setCarouselFormVisible(true) } }/>
             </Col>
             <Col>
-                <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "New Stepper" tilePressed = { () => { setStepperFormVisible(true) } }/>
+                <Tile icon="Stepper.svg" title = "New Stepper" tilePressed = { () => { setStepperFormVisible(true) } }/>
             </Col>
             <Col>
-                <Tile icon="https://image.flaticon.com/icons/png/512/51/51057.png" title = "New Textfield" tilePressed = { () => { setTextfieldFormVisible(true) } }/>
+                <Tile icon="Textfield.svg" title = "New Textfield" tilePressed = { () => { setTextfieldFormVisible(true) } }/>
             </Col>
         </Row>
         <div style={styles.spacer80}></div>

@@ -37,11 +37,12 @@ const LoginScreen = (location) => {
               <Button 
                   onClick={() =>
                   loginWithRedirect({})
-              }>Sign In</Button>
+              }>&nbsp;&nbsp; Sign In &nbsp;&nbsp;</Button>
           </Row>
         </Col>
         <Col>
           <Row>
+            <div style={styles.spacer80}></div>
             <Image src={require("../assets/img/business_shop.svg")} fluid/>
           </Row>
         </Col>

@@ -3,8 +3,8 @@
 import React from "react";
 import { useAuth0 } from "../react-auth0-wrapper";
 import { NavLink,Route,Link,withRouter } from "react-router-dom";
-import { Button,Container,Row,Col,Navbar,Nav } from "react-bootstrap";
-import { ReactComponent as Logo } from '../assets/img/logo.svg';
+import { Button,Container,Row,Col,Navbar,Nav,Image } from "react-bootstrap";
+import { ReactComponent as Logo } from '../assets/img/loreal.svg';
 import {StateContext,DispatchContext} from '../redux/contexts';
 import Actions from '../redux/actions';
 import axios from 'axios';
@@ -131,17 +131,32 @@ const NavBar = (props) => {
 
       <Container fluid={true}>
         <div style={styles.spacer10}></div>
+
         <Row>
-          <Col md={1}><Logo/></Col>
-          <Col md={{span:10,offset:0}} style={styles.navbarLinks}>
+          <NavLink to="/" style={{textDecoration:"none"}}>  
+            <Col>
+              <div style={styles.spacer10}></div>
+              <Image src={require("../assets/img/loreal.svg")} fluid/>
+            </Col>
+          </NavLink>
+
+        
+          {/* <Col md={1}><Logo/></Col> */}
+
+          <Col sm style={styles.navbarLinks}>
             <MenuLink activeOnlyWhenExact={true} to="/" label="Listing" />
             <MenuLink to="/profile" label="Upcoming" />
             <MenuLink to="/profile" label="Customers" />
             <MenuLink to="/profile" label="Sales" />
             <MenuLink to="/profile" label="Issues" />
           </Col>
-          <Col md={{span:1,offset:0}}><Button onClick={() => logout()}>Logout</Button></Col>
+
+
+          <NavLink to='/login' style={{textDecoration:"none"}} onClick = {()=>logout()}>
+                <Col sm><Button>Logout</Button></Col>
+          </NavLink>
         </Row>
+
         <Row style={styles.navbarBottomDivider}></Row>
       </Container>
 

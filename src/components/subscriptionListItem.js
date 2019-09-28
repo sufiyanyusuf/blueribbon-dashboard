@@ -20,6 +20,25 @@ const ListItem = (props) => {
     `;
 
     const subscription = props.subscription;
+    console.log(subscription);
+    
+    const getBadgeVariant = (subscription)=>{
+
+        if (subscription.status){
+            switch (subscription.status){
+                case 'draft':
+                    return 'warning';
+                case 'live':
+                    return 'success'
+                case 'closed':
+                    return 'danger'
+                default:
+                    return 'warning'
+            }
+        }
+
+        return 'warning';
+    }
 
     return (
         <Link to="/listing/edit/productInfo" id={subscription.key} style={{ textDecoration: 'none' }} >
@@ -27,7 +46,7 @@ const ListItem = (props) => {
                 <Row>
                     <Col>{subscription.date}</Col>
                     <Col xs={6}>{subscription.title}</Col>
-                    <Col>{subscription.status}</Col>
+                    <Col><Button variant={getBadgeVariant(subscription)}>{subscription.status}</Button></Col>
                     <Col>{subscription.count}</Col>
                 </Row>
             </StyledRow>

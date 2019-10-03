@@ -10,7 +10,8 @@ const Endpoints = (params) => {
             createModifier:'http://localhost:4000/api/modifier/create',
             getProductInfo:'http://localhost:4000/api/productInfo/'+params,
             removeModifier:'http://localhost:4000/api/modifier/'+params,
-            updateProductInfo:'http://localhost:4000/api/listing/updateInfo'
+            updateProductInfo:'http://localhost:4000/api/listing/updateInfo',
+            searchServiceAreas:'http://localhost:4000/api/search/serviceAreas/'+params,
         }
     }else{
         return {

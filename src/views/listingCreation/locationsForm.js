@@ -6,23 +6,20 @@ import loadGooglePlaces from '../../utils/loadGooglePlaces';
 import Map from '../../components/map';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
-
-
-const getLatLong = (id) => {
-    console.log(id)
-    // geocodeByPlaceId(id)
-    // .then(results => console.log(results))
-    // .catch(error => console.error(error));
-};
-
+import Api from '../../utils/endpoints';
+import axios from 'axios';
+import Autocomplete from 'react-autocomplete';
 
 const LocationForm = () => {
 
-  
+    const [searchLoader,setLoader] = useState(false);
+    const [areas,updateAreas] = useState([]);
+    const [searchResults,setSearchResults] = useState([]);
+    const [searchQuery,setQuery] = useState([]);
     const globalState = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
-    console.log(globalState.currentListing);
+    console.log(searchResults);
 
     const removeArea = (obj)=>{
         console.log("remove");
@@ -34,7 +31,7 @@ const LocationForm = () => {
 
     function AreaList() {
         const listItems = areas.map((area) =>
-            <li key= {area.id}> {area.description}
+            <li key= {area.id}> {area.properties.NAME_3}
                 <Button onClick = {() => removeArea(area)}>Remove</Button>
             </li>
         );
@@ -43,9 +40,22 @@ const LocationForm = () => {
         );
     }
 
-    loadGooglePlaces(); 
 
-    const [areas,updateAreas] = useState([]);
+    const handleSearch = (query) => {
+        console.log(query.length)
+        if (query.length > 3) {
+            console.log(query.length)
+            setLoader(true)
+            axios.get(Api(query).searchServiceAreas)
+            .then(res => {
+                setLoader(false)
+                const results = res.data;
+                //add check for null
+                setSearchResults(results);
+            })
+        }
+    }
+
 
     return (
         <Container fluid={true}>
@@ -53,21 +63,38 @@ const LocationForm = () => {
                 <Col md={{ span: 4, offset: 1 }}>
                     <div style={styles.spacer80}></div>
                     <h1 style={styles.leftAlign}>Where Will You Deliver ?</h1>
-
                     <div style={styles.spacer40}></div>
-                    <div>
-                        <GooglePlacesAutocomplete
-                            placeholder={'Enter Area'}  
-                            autocompletionRequest = {{
-                                types: ["(regions)"]
-                            }}
-                            onSelect={(obj) => (
-                                updateAreas(areas.concat([obj]))
-                            )}
-                            debounce={500}
-                        />
-                    </div>
+
+                    <Autocomplete
+                        inputProps={{ id: 'location-searchbox' }}
+                        // wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+                        value={searchQuery}
+                        items={searchResults}
+                        getItemValue={(item) => item.properties.NAME_3}
+                        onSelect={(value, item) => {
+                            updateAreas(areas.concat([item]))
+                        }}
+                        onChange={(event, value) => {
+                            setQuery(value);
+                            handleSearch(value)
+                        }}
+                        renderMenu={children => (
+                            <div className="menu">
+                                {children}
+                            </div>
+                        )}
+                        renderItem={(item, isHighlighted) => (
+                            <div
+                                className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                                key={item.id}
+                            >{item.properties.NAME_3}
+                            </div>
+                        )}
+                    />
+
                     <AreaList/>
+
+                    
                 </Col>
 
                 <Col md={{ span: 6, offset: 1 }}>

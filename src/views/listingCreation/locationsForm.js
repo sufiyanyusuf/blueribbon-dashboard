@@ -4,6 +4,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { geocodeByPlaceId} from 'react-google-places-autocomplete';
 import loadGooglePlaces from '../../utils/loadGooglePlaces';
 import Map from '../../components/map';
+import GoogleMap from '../../components/googleMaps';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
 import Api from '../../utils/endpoints';
@@ -12,9 +13,9 @@ import AsyncSelect from 'react-select/async';
 
 const LocationForm = () => {
     
-    const [searchLoader,setLoader] = useState(false);
     const [areas,updateAreas] = useState([]);
     const [selectedAreas, setSelectedAreas] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const globalState = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
@@ -43,28 +44,30 @@ const LocationForm = () => {
             axios.get(Api(inputValue).searchServiceAreas)
             .then(res => {
                 const results = res.data;
-                console.log(results)
+                // console.log(results)
                 const viewModel = results.map((result)=>{
                     if (result.properties.NAME_3){
-                        return {id:result.id,value:result.id,label:result.properties.NAME_3,properties:result.properties}
+                        return {id:result.id,value:result.id,label:result.properties.NAME_3,properties:result.properties,geometry:result.geometry}
                     }else if (result.properties.NAME_2){
-                        return {id:result.id,value:result.id,label:result.properties.NAME_2,properties:result.properties}
+                        return {id:result.id,value:result.id,label:result.properties.NAME_2,properties:result.properties,geometry:result.geometry}
                     }else{
-                        return {id:result.id,value:result.id,label:result.properties.NAME_1,properties:result.properties}
+                        return {id:result.id,value:result.id,label:result.properties.NAME_1,properties:result.properties,geometry:result.geometry}
                     }
                 })
-                setSelectedAreas(viewModel);
+                setSearchResults(viewModel);
                 callback (viewModel);
             })
         }else{
-            setSelectedAreas([]);
+            setSearchResults([]);
             callback([]);
         }
 
     };
 
     const handleChange = (selectedOptions) => {
-        console.log(selectedOptions)
+        setSelectedAreas(selectedOptions)
+        // console.log(selectedOptions)
+        //update redux store with selection
     }
 
 
@@ -88,7 +91,15 @@ const LocationForm = () => {
                 </Col>
 
                 <Col md={{ span: 6, offset: 1 }}>
-                    <Map/>
+                    {/* <Map/> */}
+                    <GoogleMap
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe12m5Dr_Nl4Npazinei3sQoJKr3MbuuY&v=3.exp&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: `92vh` }} />}
+                        mapElement={<div style={{ height: `92vh` }} />}
+                        selectedAreas = {selectedAreas}
+                    />
+
                 </Col>
             </Row>
         </Container>

@@ -21,7 +21,8 @@ const Endpoints = (params) => {
             createModifier:'https://blue-ribbon.herokuapp.com/api/modifier/create',
             getProductInfo:'https://blue-ribbon.herokuapp.com/api/productInfo/'+params,
             removeModifier:'https://blue-ribbon.herokuapp.com/api/modifier/'+params,
-            updateProductInfo:'https://blue-ribbon.herokuapp.com/api/listing/updateInfo'
+            updateProductInfo:'https://blue-ribbon.herokuapp.com/api/listing/updateInfo',
+            searchServiceAreas:'https://blue-ribbon.herokuapp.com/api/search/serviceAreas/'+params,
         }
     }
 }

@@ -13,30 +13,10 @@ import AsyncSelect from 'react-select/async';
 
 const LocationForm = () => {
     
-    const [areas,updateAreas] = useState([]);
     const [selectedAreas, setSelectedAreas] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
     const globalState = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
-    const removeArea = (obj)=>{
-        console.log("remove");
-        var _areas = areas.filter(x => {
-            return x.id != obj.id;
-          });
-        updateAreas(_areas);
-    };
-
-    function AreaList() {
-        const listItems = areas.map((area) =>
-            <li key= {area.id}> {area.properties.NAME_3}
-                <Button onClick = {() => removeArea(area)}>Remove</Button>
-            </li>
-        );
-        return (
-            listItems
-        );
-    }
 
     const loadOptions = (inputValue, callback) => {
 
@@ -54,12 +34,10 @@ const LocationForm = () => {
                         return {id:result.id,value:result.id,label:result.properties.NAME_1,properties:result.properties,geometry:result.geometry}
                     }
                 })
-                setSearchResults(viewModel);
                 console.log(viewModel)
                 callback (viewModel);
             })
         }else{
-            setSearchResults([]);
             callback([]);
         }
 

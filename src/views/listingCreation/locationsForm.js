@@ -55,6 +55,7 @@ const LocationForm = () => {
                     }
                 })
                 setSearchResults(viewModel);
+                console.log(viewModel)
                 callback (viewModel);
             })
         }else{
@@ -65,7 +66,21 @@ const LocationForm = () => {
     };
 
     const handleChange = (selectedOptions) => {
-        setSelectedAreas(selectedOptions)
+        // setSelectedAreas(selectedOptions)
+
+        const areas = selectedOptions;
+        const polygons = areas.map((area)=>{
+            return area.geometry.coordinates[0][0]
+        })
+
+        var gPolygonArray = polygons.map (coordinateSet => {
+            return coordinateSet.map(coordinate => {
+                return {lat:coordinate[1],lng:coordinate[0]}
+            })
+        })
+
+        setSelectedAreas(gPolygonArray)
+
         // console.log(selectedOptions)
         //update redux store with selection
     }

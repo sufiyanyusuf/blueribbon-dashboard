@@ -2,19 +2,8 @@ import React from "react";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 
     
-      const renderRegions=(areas)=>{
-        //get array of polygons
-
-        const polygons = areas.map((area)=>{
-            return area.geometry.coordinates[0][0]
-        })
-
-        var gPolygonArray = polygons.map (coordinateSet => {
-            return coordinateSet.map(coordinate => {
-                return {lat:coordinate[1],lng:coordinate[0]}
-            })
-        })
-
+      const renderRegions=(gPolygonArray)=>{
+   
         return(
             gPolygonArray.map((gPolygon)=>{
                 return (

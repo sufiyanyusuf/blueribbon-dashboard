@@ -72,8 +72,16 @@ import Actions from './actions';
   const modifierReducer = (state,action) => {
     switch (action.type){
       case Actions.modifier.setModifiers:
-        console.log(state)
         return action.modifiers;
+      default:
+        return state;
+    }
+  };
+
+  const serviceAreasReducer = (state,action) => {
+    switch (action.type){
+      case Actions.serviceAreas.updateServiceAreas:
+        return action.areas;
       default:
         return state;
     }
@@ -84,6 +92,7 @@ import Actions from './actions';
       "productInfoReducer":productInfoReducer,
       'currentListingIDReducer':currentListingIDReducer,
       'modifierReducer':modifierReducer,
+      'serviceAreasReducer':serviceAreasReducer,
   };
 
   export default reducers;

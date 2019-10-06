@@ -13,10 +13,30 @@ import AsyncSelect from 'react-select/async';
 
 const LocationForm = () => {
     
-    const [selectedAreas, setSelectedAreas] = useState([]);
     const globalState = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
+    const getPolygons = (areas) => {
+        const polygons = areas.map((area)=>{
+            return area.geometry.coordinates[0][0]
+        })
+
+        var gPolygonArray = polygons.map (coordinateSet => {
+            return coordinateSet.map(coordinate => {
+                return {lat:coordinate[1],lng:coordinate[0]}
+            })
+        })
+
+        return gPolygonArray
+
+    };
+
+    const getPolygonsFromState = () => {
+        const polygons = globalState.currentServiceAreas.map ((area)=>{
+            return area.polygon
+        })
+        return polygons
+    }
 
     const loadOptions = (inputValue, callback) => {
 
@@ -34,7 +54,7 @@ const LocationForm = () => {
                         return {id:result.id,value:result.id,label:result.properties.NAME_1,properties:result.properties,geometry:result.geometry}
                     }
                 })
-                console.log(viewModel)
+                // console.log(viewModel)
                 callback (viewModel);
             })
         }else{
@@ -44,25 +64,22 @@ const LocationForm = () => {
     };
 
     const handleChange = (selectedOptions) => {
-        // setSelectedAreas(selectedOptions)
 
-        const areas = selectedOptions;
-        const polygons = areas.map((area)=>{
-            return area.geometry.coordinates[0][0]
+        const gPolygonArray = getPolygons(selectedOptions);
+
+        const _selectedAreas = selectedOptions.map((option,index)=>{
+            return {
+                label:option.label,
+                data_id:option.id,
+                polygon:gPolygonArray[index],
+                listing:globalState.currentListing.id,
+            }
         })
+        
+        dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
+        console.log(_selectedAreas)
 
-        var gPolygonArray = polygons.map (coordinateSet => {
-            return coordinateSet.map(coordinate => {
-                return {lat:coordinate[1],lng:coordinate[0]}
-            })
-        })
-
-        setSelectedAreas(gPolygonArray)
-
-        // console.log(selectedOptions)
-        //update redux store with selection
     }
-
 
     return (
         <Container fluid={true}>
@@ -73,9 +90,10 @@ const LocationForm = () => {
                     <div style={styles.spacer40}></div>
                     <AsyncSelect 
                         cacheOptions 
+                        defaultValue={globalState.currentServiceAreas}
                         loadOptions={loadOptions} 
                         isMulti
-                        autoFocus = {true}
+                        autoFocus = {globalState.currentServiceAreas.length == 0}
                         onChange={handleChange}
                     />
                    
@@ -90,7 +108,7 @@ const LocationForm = () => {
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `92vh` }} />}
                         mapElement={<div style={{ height: `92vh` }} />}
-                        selectedAreas = {selectedAreas}
+                        selectedAreas = {getPolygonsFromState()}
                     />
 
                 </Col>

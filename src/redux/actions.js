@@ -13,6 +13,9 @@ const actions = {
     },
     modifier:{
         setModifiers:'SET_MODIFIERS',
+    },
+    serviceAreas:{
+        updateServiceAreas:'UPDATE_SERVICE_AREAS'
     }
 }
 

@@ -35,6 +35,7 @@ function App() {
     currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo),
     currentListing: React.useReducer(reducers.currentListingIDReducer, globalState.currentListing),
     currentModifiers: React.useReducer(reducers.modifierReducer, globalState.currentModifiers),
+    currentServiceAreas:React.useReducer(reducers.serviceAreasReducer, globalState.currentServiceAreas)
   });
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();

@@ -28,7 +28,8 @@ const state = {
     "subscriptions":subscriptions,
     'currentProductInfo':{id:''},
     'currentListing':{id:''},
-    'currentModifiers':[]
+    'currentModifiers':[],
+    'currentServiceAreas':[]
 };
 
   export default state;

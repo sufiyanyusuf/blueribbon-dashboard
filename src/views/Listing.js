@@ -40,6 +40,7 @@ const Listing = () => {
 
         if (state.currentListing.id !== ''){
           dispatch({type:Actions.listing.updateCurrentListingID,id:''});
+          dispatch({type:Actions.serviceAreas.updateServiceAreas,areas:[]});
         }
         
       })

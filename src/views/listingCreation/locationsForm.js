@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect} from "react";
 import { Container,Row,Col,Button } from "react-bootstrap";
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { geocodeByPlaceId} from 'react-google-places-autocomplete';
@@ -16,20 +16,25 @@ const LocationForm = () => {
     const globalState = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
-    const getPolygons = (areas) => {
-        const polygons = areas.map((area)=>{
-            return area.geometry.coordinates[0][0]
-        })
+    useEffect (()=>{
+    
+        axios.get(Api(globalState.currentListing.id).getServiceAreas)
+      .then(res => {
+        const areas = res.data.map(area => {
+            return {
+                label:area.label,
+                value:area.data_id,
+                data_id:area.data_id,
+                polygon:area.polygon.data
+            }
+        });  
 
-        var gPolygonArray = polygons.map (coordinateSet => {
-            return coordinateSet.map(coordinate => {
-                return {lat:coordinate[1],lng:coordinate[0]}
-            })
-        })
+        if (JSON.stringify(areas)!==JSON.stringify(globalState.currentServiceAreas)){
+            dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:areas});
+        }
 
-        return gPolygonArray
-
-    };
+      })
+    })
 
     const getPolygonsFromState = () => {
         const polygons = globalState.currentServiceAreas.map ((area)=>{
@@ -38,47 +43,48 @@ const LocationForm = () => {
         return polygons
     }
 
-    const loadOptions = (inputValue, callback) => {
-
-        if (inputValue.length > 3) {
-            axios.get(Api(inputValue).searchServiceAreas)
-            .then(res => {
-                const results = res.data;
-                // console.log(results)
-                const viewModel = results.map((result)=>{
-                    if (result.properties.NAME_3){
-                        return {id:result.id,value:result.id,label:result.properties.NAME_3,properties:result.properties,geometry:result.geometry}
-                    }else if (result.properties.NAME_2){
-                        return {id:result.id,value:result.id,label:result.properties.NAME_2,properties:result.properties,geometry:result.geometry}
-                    }else{
-                        return {id:result.id,value:result.id,label:result.properties.NAME_1,properties:result.properties,geometry:result.geometry}
-                    }
-                })
-                // console.log(viewModel)
-                callback (viewModel);
-            })
-        }else{
-            callback([]);
+    const loadSearchOptions = (inputValue, callback) => {
+        if (!inputValue) {
+            return callback([]);
         }
-
+        
+        axios.get(Api(inputValue).searchServiceAreas)
+        .then(res => {
+            const results = res.data;
+            callback (results.areas);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        
     };
 
     const handleChange = (selectedOptions) => {
+        //update state when a search result gets selected
+        if (selectedOptions) {
+            const _selectedAreas = selectedOptions.map((option)=>{
+                return {
+                    label:option.label,
+                    value:option.data_id,
+                    data_id:option.data_id,
+                    polygon:option.polygon
+                }
+            })
 
-        const gPolygonArray = getPolygons(selectedOptions);
-
-        const _selectedAreas = selectedOptions.map((option,index)=>{
-            return {
-                label:option.label,
-                data_id:option.id,
-                polygon:gPolygonArray[index],
-                listing:globalState.currentListing.id,
+            if (globalState.currentListing.id !== ''){
+                axios.post(Api().updateServiceAreas, {
+                    areas:_selectedAreas,
+                    listing_id:globalState.currentListing.id
+                }).then(res =>{
+                    if (res.status == 200){
+                        dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
+                    }else{
+                        console.log('error')
+                    }
+                    //show feedback toast
+                });
             }
-        })
-        
-        dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
-        console.log(_selectedAreas)
-
+        }
     }
 
     return (
@@ -90,8 +96,8 @@ const LocationForm = () => {
                     <div style={styles.spacer40}></div>
                     <AsyncSelect 
                         cacheOptions 
-                        defaultValue={globalState.currentServiceAreas}
-                        loadOptions={loadOptions} 
+                        value={globalState.currentServiceAreas}
+                        loadOptions={loadSearchOptions} 
                         isMulti
                         autoFocus = {globalState.currentServiceAreas.length == 0}
                         onChange={handleChange}

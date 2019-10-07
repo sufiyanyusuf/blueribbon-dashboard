@@ -12,6 +12,8 @@ const Endpoints = (params) => {
             removeModifier:'http://localhost:4000/api/modifier/'+params,
             updateProductInfo:'http://localhost:4000/api/listing/updateInfo',
             searchServiceAreas:'http://localhost:4000/api/search/serviceAreas/'+params,
+            updateServiceAreas:'http://localhost:4000/api/serviceLocations/update',
+            getServiceAreas:'http://localhost:4000/api/serviceLocations/'+params,
         }
     }else{
         return {
@@ -23,6 +25,8 @@ const Endpoints = (params) => {
             removeModifier:'https://blue-ribbon.herokuapp.com/api/modifier/'+params,
             updateProductInfo:'https://blue-ribbon.herokuapp.com/api/listing/updateInfo',
             searchServiceAreas:'https://blue-ribbon.herokuapp.com/api/search/serviceAreas/'+params,
+            updateServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/update',
+            getServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/'+params,
         }
     }
 }

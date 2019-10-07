@@ -61,8 +61,10 @@ const LocationForm = () => {
 
     const handleChange = (selectedOptions) => {
         //update state when a search result gets selected
+        var _selectedAreas = []
+        
         if (selectedOptions) {
-            const _selectedAreas = selectedOptions.map((option)=>{
+            _selectedAreas = selectedOptions.map((option)=>{
                 return {
                     label:option.label,
                     value:option.data_id,
@@ -70,20 +72,21 @@ const LocationForm = () => {
                     polygon:option.polygon
                 }
             })
-
-            if (globalState.currentListing.id !== ''){
-                axios.post(Api().updateServiceAreas, {
-                    areas:_selectedAreas,
-                    listing_id:globalState.currentListing.id
-                }).then(res =>{
-                    if (res.status == 200){
-                        dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
-                    }else{
-                        console.log('error')
-                    }
-                    //show feedback toast
-                });
-            }
+            
+        }
+        
+        if (globalState.currentListing.id !== ''){
+            axios.post(Api().updateServiceAreas, {
+                areas:_selectedAreas,
+                listing_id:globalState.currentListing.id
+            }).then(res =>{
+                if (res.status == 200){
+                    dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
+                }else{
+                    console.log('error')
+                }
+                //show feedback toast
+            });
         }
     }
 

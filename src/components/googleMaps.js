@@ -3,7 +3,6 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-g
 
     
       const renderRegions=(gPolygonArray)=>{
-        console.log(gPolygonArray)
         return(
             gPolygonArray.map((gPolygon)=>{
                 return (

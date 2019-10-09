@@ -66,6 +66,7 @@ const NavBar = (props) => {
           org_id:2,
           description:state.currentProductInfo.description,
           type:'product',
+          image_url:state.currentProductInfo.imageUrl,
         }).then(res =>{
           const listing = res.data.listing;
           console.log(listing);
@@ -87,7 +88,8 @@ const NavBar = (props) => {
           org_id:2,
           description:state.currentProductInfo.description,
           type:state.currentProductInfo.type,
-          listing_id:state.currentListing.id
+          listing_id:state.currentListing.id,
+          image_url:state.currentProductInfo.imageUrl
         }).then(res =>{
           console.log('updation response',res)
           //show feedback toast

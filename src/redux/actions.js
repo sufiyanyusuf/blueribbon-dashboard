@@ -6,6 +6,7 @@ const actions = {
         updateType:'UPDATE_TYPE',
         updateID:'UPDATE_ID',
         updateProductInfo:'UPDATE_PRODUCTINFO',
+        updateImageUrl:'UPDATE_IMAGE_URL',
     },
     listing : {
         updateCurrentListingID:"UPDATE_CURRENT_LISTING",

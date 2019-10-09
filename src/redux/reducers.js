@@ -58,8 +58,12 @@ import Actions from './actions';
             return info;
 
         case Actions.productInfo.updateID:
-                info.id = action.id;
-                return info;
+            info.id = action.id;
+            return info;
+        
+        case Actions.productInfo.updateImageUrl:
+            info.imageUrl = action.imageUrl;
+            return info;
 
         case Actions.productInfo.update:
             return info;

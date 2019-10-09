@@ -5,9 +5,11 @@ import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
 import axios from 'axios';
 import Api from '../../utils/endpoints';
+import 'react-dropzone-uploader/dist/styles.css'
+import Dropzone from 'react-dropzone-uploader'
 
 const ProductInfoForm = () => {
-  
+
   const state = React.useContext(StateContext);
   const dispatch = React.useContext(DispatchContext);
 
@@ -69,7 +71,27 @@ const ProductInfoForm = () => {
       console.log('updated description',state.currentProductInfo.description);
     }
   };
- 
+
+  const getUploadParams = async () => {
+    return { url: Api().uploadProductImage }
+  }
+
+  const handleChangeStatus = ({ xhr,meta, remove }, status) => {
+    if (status === 'headers_received') {
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText);
+          dispatch({type:Actions.productInfo.updateImageUrl,imageUrl:xhr.responseText});
+        }
+      }
+      
+      remove()
+    } else if (status === 'aborted') {
+    }
+  }
+
+  
   return (
     <Container>
 
@@ -116,8 +138,19 @@ const ProductInfoForm = () => {
         <div style={styles.spacer20}></div>
 
         <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
-            <Form.Label>Choose Image</Form.Label><br/>
-            <input type="file" name="file"/>
+          <Form.Label>Choose Image</Form.Label><br/>
+          <Dropzone
+            getUploadParams={getUploadParams}
+            onChangeStatus={handleChangeStatus}
+            maxFiles={1}
+            multiple={false}
+            canCancel={true}
+            inputContent="Drop A File"
+            styles={{
+              dropzoneActive: { borderColor: 'blue' },
+            }}
+          />
+
         </Form.Group>
 
         <div style={styles.spacer20}></div>

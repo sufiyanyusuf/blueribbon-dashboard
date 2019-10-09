@@ -22,11 +22,18 @@ const Listing = () => {
     console.log(Api().getListing);
     axios.get(Api().getListing)
       .then(res => {
+        
+
         const listings = res.data[0].listings;
         let _listings = listings.map((listing) => {
+
+          const options = {year: 'numeric', month: 'short', day: 'numeric' };
+          const date  = new Date(listing.created_at);
+          const formattedDate = date.toLocaleDateString("en-US", options);
+
           return {
              key: listing.id,
-             date: listing.created_at,
+             date: formattedDate,
              title: listing.title,
              status:listing.status,
              count: 0

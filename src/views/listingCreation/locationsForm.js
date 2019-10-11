@@ -20,19 +20,20 @@ const LocationForm = () => {
     
         axios.get(Api(globalState.currentListing.id).getServiceAreas)
       .then(res => {
-        const areas = res.data.map(area => {
-            return {
-                label:area.label,
-                value:area.data_id,
-                data_id:area.data_id,
-                polygon:area.polygon.data
+        if (res.data){
+            const areas = res.data.map(area => {
+                return {
+                    label:area.label,
+                    value:area.data_id,
+                    data_id:area.data_id,
+                    polygon:area.polygon.data
+                }
+            });  
+
+            if (JSON.stringify(areas)!==JSON.stringify(globalState.currentServiceAreas)){
+                dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:areas});
             }
-        });  
-
-        if (JSON.stringify(areas)!==JSON.stringify(globalState.currentServiceAreas)){
-            dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:areas});
         }
-
       })
     })
 

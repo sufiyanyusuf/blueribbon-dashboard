@@ -67,6 +67,14 @@ import Actions from './actions';
 
         case Actions.productInfo.update:
             return info;
+        
+        case Actions.productInfo.updateBasePrice:
+            info.basePrice = action.basePrice
+            return info
+        
+        case Actions.productInfo.updateCurrency:
+            info.currency = action.currency
+            return info
 
         default:
             return state;

@@ -12,7 +12,8 @@ const ProductInfoForm = () => {
 
   const state = React.useContext(StateContext);
   const dispatch = React.useContext(DispatchContext);
-
+  const basePriceRef = useRef (null);
+  const currencyRef = useRef (null);
   const titleRef = useRef(null);
   const unitRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -61,6 +62,22 @@ const ProductInfoForm = () => {
     if (state.currentProductInfo.unit != unit) {
       dispatch({ type: Actions.productInfo.updateUnit, unit:unit});
       console.log('updated unit',state.currentProductInfo.unit);
+    }
+  };
+
+  const updateBasePrice = () => {
+    let basePrice = basePriceRef.current.value;
+    if (state.currentProductInfo.basePrice != basePrice) {
+      dispatch({ type: Actions.productInfo.updateBasePrice, basePrice:basePrice});
+      console.log('updated base price',state.currentProductInfo.basePrice);
+    }
+  };
+
+  const updateCurrency = () => {
+    let currency = currencyRef.current.value;
+    if (state.currentProductInfo.currency != currency) {
+      dispatch({ type: Actions.productInfo.updateCurrency, currency:currency});
+      console.log('updated currency',state.currentProductInfo.currency);
     }
   };
 
@@ -155,6 +172,20 @@ const ProductInfoForm = () => {
 
         <div style={styles.spacer20}></div>
 
+        <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+            <Form.Label>Base Price</Form.Label>
+            <Form.Control placeholder="Base Price" value={state.currentProductInfo.basePrice || ''} ref={basePriceRef} onChange = {updateBasePrice}/>
+        </Form.Group>
+
+        <div style={styles.spacer20}></div>
+
+        <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+            <Form.Label>Currency</Form.Label>
+            <Form.Control placeholder="Currency" value={state.currentProductInfo.currency || ''} ref={currencyRef} onChange = {updateCurrency}/>
+        </Form.Group>
+
+        <div style={styles.spacer20}></div>
+          
       </Form>
 
       <div style={styles.spacer80}></div>

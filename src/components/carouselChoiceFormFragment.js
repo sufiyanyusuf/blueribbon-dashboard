@@ -1,12 +1,32 @@
-import React, {useRef} from "react";
+import React, {useRef,useState} from "react";
 import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-bootstrap";
+import 'react-dropzone-uploader/dist/styles.css'
+import Dropzone from 'react-dropzone-uploader'
+import Api from '../utils/endpoints';
 
 const CarouselChoiceFragment = (props) => {
     
     const choiceTitle = useRef(null);
     const pricingImpact = useRef(null);
     const choiceExplainer = useRef(null);
-    const choiceIcon = useRef(null);
+    const [choiceIcon,setChoiceIcon] = useState('');
+
+    const getUploadParams = async () => {
+        return { url: Api().uploadProductImage }
+    }
+    
+    const handleChangeStatus = ({ xhr,meta, remove }, status) => {
+        if (status === 'headers_received') {
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    setChoiceIcon(xhr.responseText);
+                }
+            }
+            remove()
+        } else if (status === 'aborted') {
+        }
+    }
+
 
     return (
         <div>
@@ -50,7 +70,17 @@ const CarouselChoiceFragment = (props) => {
             <Col>
                 <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                 <Form.Label>Upload Icon</Form.Label><br/>
-                <input type="file" name="file"/>
+                <Dropzone
+                    getUploadParams={getUploadParams}
+                    onChangeStatus={handleChangeStatus}
+                    maxFiles={1}
+                    multiple={false}
+                    canCancel={true}
+                    inputContent="Drop A File"
+                    styles={{
+                    dropzoneActive: { borderColor: 'blue' },
+                    }}
+                />
                 </Form.Group>
             </Col>
             </Row>
@@ -61,7 +91,7 @@ const CarouselChoiceFragment = (props) => {
               title:choiceTitle.current.value,
               pricing:pricingImpact.current.value,
               explainer:choiceExplainer.current.value,
-              icon:"https://image.flaticon.com/icons/png/512/97/97895.png"
+              icon:choiceIcon
               })} 
             }>
                 Add Choice
@@ -88,4 +118,5 @@ let styles = {
       textAlign:"left"
     }
   }
+
 export default CarouselChoiceFragment;

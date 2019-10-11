@@ -7,6 +7,8 @@ const actions = {
         updateID:'UPDATE_ID',
         updateProductInfo:'UPDATE_PRODUCTINFO',
         updateImageUrl:'UPDATE_IMAGE_URL',
+        updateBasePrice:'UPDATE_BASE_PRICE',
+        updateCurrency:'UPDATE_CURRENCY'
     },
     listing : {
         updateCurrentListingID:"UPDATE_CURRENT_LISTING",

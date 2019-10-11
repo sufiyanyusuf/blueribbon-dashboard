@@ -19,8 +19,8 @@ import Listing from "./views/Listing";
 import LocationForm from "./views/listingCreation/locationsForm";
 import ProductInfoForm from "./views/listingCreation/productInfoForm";
 import ModifierForm from "./views/listingCreation/modifierForm";
-import PricingForm from "./views/listingCreation/pricingForm";
 import FulfillmentForm from "./views/listingCreation/fulfillmentForm";
+import PublishForm from "./views/listingCreation/publishForm";
 
 import reducers from './redux/reducers';
 import globalState from './redux/state';
@@ -63,8 +63,8 @@ function App() {
               <PrivateRoute path="/profile" component={Profile} />
               <Route path="/listing/edit/locationForm" component={LocationForm} />
               <Route path="/listing/edit/modifierForm" component={ModifierForm} />
-              <Route path="/listing/edit/pricingForm" component={PricingForm} />
               <Route path="/listing/edit/fulfillmentForm" component={FulfillmentForm} />
+              <Route path="/listing/edit/publishForm" component={PublishForm} />
               <Route path="/listing/edit/productInfo" component={ProductInfoForm} />
               <Route path="/login" component={Login} />
             </Switch>

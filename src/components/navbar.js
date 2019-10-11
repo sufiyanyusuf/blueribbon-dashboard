@@ -67,6 +67,8 @@ const NavBar = (props) => {
           description:state.currentProductInfo.description,
           type:'product',
           image_url:state.currentProductInfo.imageUrl,
+          currency:state.currentProductInfo.currency,
+          base_price:state.currentProductInfo.basePrice
         }).then(res =>{
           const listing = res.data.listing;
           console.log(listing);
@@ -89,7 +91,9 @@ const NavBar = (props) => {
           description:state.currentProductInfo.description,
           type:state.currentProductInfo.type,
           listing_id:state.currentListing.id,
-          image_url:state.currentProductInfo.imageUrl
+          image_url:state.currentProductInfo.imageUrl,
+          currency:state.currentProductInfo.currency,
+          base_price:state.currentProductInfo.basePrice
         }).then(res =>{
           console.log('updation response',res)
           //show feedback toast
@@ -120,7 +124,7 @@ const NavBar = (props) => {
     }
 
     if (currentPath.includes('/listing/edit/fulfillmentForm')){
-      return '/';
+      return '/listing/edit/publishForm';
     }
 
     return '/';
@@ -178,8 +182,8 @@ const NavBar = (props) => {
                 <MenuLink to="/listing/edit/productInfo/" label="1.Product Info" />
                 <MenuLink to="/listing/edit/locationForm/" label="2.Locations" />
                 <MenuLink to="/listing/edit/modifierForm/" label="3.Modifiers" />
-                <MenuLink to="/listing/edit/pricingForm/" label="4.Pricing" />
-                <MenuLink to="/listing/edit/fulfillmentForm/" label="5.Fulfillment" />
+                <MenuLink to="/listing/edit/fulfillmentForm/" label="4.Fulfillment" />
+                <MenuLink to="/listing/edit/publishForm/" label="5.Publish" />
               </Col>
 
               <NavLink to={getNext(props.location.pathname)} style={{textDecoration:"none"}} onClick = {()=>nextPressed(props.location.pathname)}>

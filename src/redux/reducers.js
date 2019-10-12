@@ -1,19 +1,15 @@
 
 import React, { Component,useReducer } from 'react';
 import Actions from './actions';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 //   {key:1,date:"date",title:"title",status:"live",count:"232"},
 
   const listingReducer = (state, action) => {
     switch (action.type) {
-    case Actions.listing.currentListing:
-        return ({
-            key: action.id,
-            date: action.date,
-            title: action.title,
-            status:action.status,
-            count: action.count
-        });
+   
+    case Actions.listing.updateStatus:
+        return action.status;
     case Actions.listing.updateAll:
         return action.listings;
     default:
@@ -21,20 +17,36 @@ import Actions from './actions';
     }
   };
 
-  const currentListingIDReducer = (state, action) => {
-    switch (action.type){
+  const currentListingReducer = (state, action) => {
 
-        case Actions.listing.updateCurrentListingID:
-            return ({
-              id: action.id
-            });
+    var listing = Object.assign({},state);
+
+    switch (action.type){
+        case Actions.listing.updateNewListingID:
+          console.log(action.id,state);
+          return ({
+            id: action.id
+          });
+          
+        case Actions.listing.updateCurrentListing:
+          return ({
+            id: action.listing.key,
+            date: action.listing.date,
+            title: action.listing.title,
+            status:action.listing.status,
+            count: action.listing.count
+          });
+
+        case Actions.listing.updateCurrentListingStatus:
+          listing.status = action.status
+          return listing;
+
         default:
-            return state;
+          return state;
     }
   };
 
   const productInfoReducer = (state,action) => {
-
     var info = Object.assign({},state);
     switch (action.type) {
         case Actions.productInfo.updateProductInfo:      
@@ -76,6 +88,9 @@ import Actions from './actions';
             info.currency = action.currency
             return info
 
+        case Actions.productInfo.clear:
+            return {}
+
         default:
             return state;
     }
@@ -102,7 +117,7 @@ import Actions from './actions';
   const reducers = {
       "listingReducer":listingReducer,
       "productInfoReducer":productInfoReducer,
-      'currentListingIDReducer':currentListingIDReducer,
+      'currentListingReducer':currentListingReducer,
       'modifierReducer':modifierReducer,
       'serviceAreasReducer':serviceAreasReducer,
   };

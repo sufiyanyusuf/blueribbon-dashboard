@@ -20,17 +20,16 @@ const ListItem = (props) => {
     `;
 
     const subscription = props.subscription;
-    console.log(subscription);
     
     const getBadgeVariant = (subscription)=>{
 
         if (subscription.status){
-            switch (subscription.status){
+            switch (subscription.status.toLowerCase()){
                 case 'draft':
                     return 'warning';
                 case 'live':
                     return 'success'
-                case 'closed':
+                case 'archived':
                     return 'danger'
                 default:
                     return 'warning'

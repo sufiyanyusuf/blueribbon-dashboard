@@ -1,8 +1,72 @@
-import React from "react";
-import { Container,Row,Col,Button,Form,DropdownButton,Dropdown } from "react-bootstrap";
+import React, {useState,useEffect} from "react";
+import { Container,Row,Col,Button,Form,DropdownButton,Dropdown,ButtonGroup } from "react-bootstrap";
+import {StateContext,DispatchContext} from '../../redux/contexts';
+import axios from 'axios';
+import Api from '../../utils/endpoints';
+import Actions from '../../redux/actions';
 
 const PublishForm = () => {
-  
+
+    const state = React.useContext(StateContext);
+    const dispatch = React.useContext(DispatchContext);
+
+    const [variant,setVariant]=useState("warning");
+
+    useEffect(()=>{
+
+        // if (state.currentListing.id !== ''){
+        //     axios.get(Api(state.currentListing.id).getListingStatus)
+        //     .then(res => {
+                // console.log(res.data)
+
+                const status = state.currentListing.status
+                updateBadgeType(status)
+
+        //       })
+        // }
+
+    })
+
+    const updateBadgeType = (status) => {
+        if (status){
+
+            switch (status.toLowerCase()){
+                case "draft":
+                    setVariant("warning")
+                    break
+                case "live":
+                    setVariant("success")
+                    break
+                case "archived":
+                    setVariant("danger")
+                    break
+                default:
+                    setVariant("warning")
+            }
+
+        }
+    }
+
+
+    const changeListingStatus = (status)=>{
+        console.log(status)
+        if (state.currentListing.id !== ''){
+            axios.post(Api().updateListingStatus, {
+                listing_id:state.currentListing.id,
+                status:status
+            }).then(res =>{
+                if (res.status == 200){
+                    console.log(res.data)
+                    updateBadgeType(status);
+                    dispatch({type: Actions.listing.updateCurrentListingStatus, status:status});
+                }else{
+                    console.log('error')
+                }
+                //show feedback toast
+            });
+        }
+    }
+
     return (
       <Container>
   
@@ -32,11 +96,12 @@ const PublishForm = () => {
   
           <Row>
               <Col>
-                    <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
-                        <DropdownButton id="dropdown-item-button" split title="Listing Status" onSelect={function(evt){console.log(evt)}}>
-                            <Dropdown.Item eventKey="1">LIVE</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">Draft</Dropdown.Item>
-                            <Dropdown.Item eventKey="3">Archived</Dropdown.Item>
+                    <Form.Group controlId="formBasic"  style = {{textAlign:"left"}}>
+                        <DropdownButton id="dropdown-item-button" variant={variant} split title={"Status : "+state.currentListing.status} onSelect={changeListingStatus}>
+                            <Dropdown.Item eventKey="Draft">Draft</Dropdown.Item>
+                            <Dropdown.Item eventKey="LIVE">LIVE</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item eventKey="Archived">Archived</Dropdown.Item>
                         </DropdownButton>
                     </Form.Group>
               </Col>

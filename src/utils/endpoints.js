@@ -14,7 +14,9 @@ const Endpoints = (params) => {
             searchServiceAreas:'http://localhost:4000/api/search/serviceAreas/'+params,
             updateServiceAreas:'http://localhost:4000/api/serviceLocations/update',
             getServiceAreas:'http://localhost:4000/api/serviceLocations/'+params,
-            uploadProductImage:'http://localhost:4000/api/upload/productImage/'
+            uploadProductImage:'http://localhost:4000/api/upload/productImage/',
+            updateListingStatus:'http://localhost:4000/api/listing/updateStatus',
+            getListingStatus:'http://localhost:4000/api/listing/'+params+'/status',
         }
     }else{
         return {
@@ -28,7 +30,9 @@ const Endpoints = (params) => {
             searchServiceAreas:'https://blue-ribbon.herokuapp.com/api/search/serviceAreas/'+params,
             updateServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/update',
             getServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/'+params,
-            uploadProductImage:'https://blue-ribbon.herokuapp.com/api/upload/productImage/'
+            uploadProductImage:'https://blue-ribbon.herokuapp.com/api/upload/productImage/',
+            updateListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/updateStatus',
+            getListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/'+params+'/status',
         }
     }
 }

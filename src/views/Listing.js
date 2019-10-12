@@ -19,7 +19,6 @@ const Listing = () => {
 
   useEffect(() => {
     // Fetch lists
-    console.log(Api().getListing);
     axios.get(Api().getListing)
       .then(res => {
         
@@ -45,16 +44,19 @@ const Listing = () => {
           dispatch({ type: Actions.listing.updateAll, listings:_listings});
         }
 
-        if (state.currentListing.id !== ''){
-          dispatch({type:Actions.listing.updateCurrentListingID,id:''});
+        console.log(state.currentListing)
+
+        if (state.currentListing.id && state.currentListing.id !== ''){
+          dispatch({type:Actions.listing.updateCurrentListing,listing:{}});
+          dispatch({type:Actions.listing.updateNewListingID,id:''});
           dispatch({type:Actions.serviceAreas.updateServiceAreas,areas:[]});
+          dispatch({type:Actions.productInfo.clear});
         }
         
       })
   });
 
 
-  console.log(state);
 
   if (loading || !user) {
     return (
@@ -62,18 +64,19 @@ const Listing = () => {
     );
   }
 
-  const selectListing = (id) => {
-    console.log(id);
-    if (state.currentListing.id !== id){
-      dispatch({type:Actions.listing.updateCurrentListingID,id:id});
+  const selectListing = (listing) => {
+    if (state.currentListing.id !== listing.key){
+      // dispatch({type:Actions.listing.updateNewListingID,id:listing.key});
+      dispatch({type:Actions.listing.updateCurrentListing,listing:listing});
     }
+    
   }
 
   function SubscriptionList(props) {
     const subscriptions = state.subscriptions;
     const listItems = subscriptions.map((subscription) =>
      
-      <ListItem key= {subscription.key} subscription={subscription} selected={()=>selectListing(subscription.key)}/>
+      <ListItem key= {subscription.key} subscription={subscription} selected={()=>selectListing(subscription)}/>
 
     );
     return (

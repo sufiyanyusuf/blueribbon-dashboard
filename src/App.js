@@ -33,7 +33,7 @@ function App() {
   const [state, dispatch] = useCombinedReducers({
     subscriptions: React.useReducer(reducers.listingReducer, globalState.subscriptions),
     currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo),
-    currentListing: React.useReducer(reducers.currentListingIDReducer, globalState.currentListing),
+    currentListing: React.useReducer(reducers.currentListingReducer, globalState.currentListing),
     currentModifiers: React.useReducer(reducers.modifierReducer, globalState.currentModifiers),
     currentServiceAreas:React.useReducer(reducers.serviceAreasReducer, globalState.currentServiceAreas)
   });

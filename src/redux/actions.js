@@ -8,11 +8,14 @@ const actions = {
         updateProductInfo:'UPDATE_PRODUCTINFO',
         updateImageUrl:'UPDATE_IMAGE_URL',
         updateBasePrice:'UPDATE_BASE_PRICE',
-        updateCurrency:'UPDATE_CURRENCY'
+        updateCurrency:'UPDATE_CURRENCY',
+        clear:'CLEAR_PRODUCT_INFO'
     },
     listing : {
-        updateCurrentListingID:"UPDATE_CURRENT_LISTING",
-        updateAll:'INITIALIZED'
+        updateNewListingID:"UPDATE_NEW_LISTING_ID",
+        updateAll:'INITIALIZED',
+        updateCurrentListing:'UPDATE_CURRENT_LISTING',
+        updateStatus:'UPDATE_STATUS'
     },
     modifier:{
         setModifiers:'SET_MODIFIERS',

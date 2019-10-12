@@ -28,6 +28,8 @@ const ProductInfoForm = () => {
           description:res.data.description, 
           unit:res.data.unit_title,
           type:res.data.type,
+          currency:res.data.currency,
+          basePrice:res.data.base_price,
           listing_id:res.data.listing_id
         }
         if (state.currentProductInfo.id !== productInfo.id){

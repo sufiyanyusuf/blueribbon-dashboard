@@ -78,7 +78,7 @@ const NavBar = (props) => {
           }
 
           if (listing.id !== state.currentListingID){
-            dispatch({ type: Actions.listing.updateCurrentListingID, id:listing.id});
+            dispatch({ type: Actions.listing.updateNewListingID, id:listing.id});
           }
           
         });

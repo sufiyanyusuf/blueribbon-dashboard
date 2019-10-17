@@ -17,6 +17,7 @@ const Endpoints = (params) => {
             uploadProductImage:'http://localhost:4000/api/upload/productImage/',
             updateListingStatus:'http://localhost:4000/api/listing/updateStatus',
             getListingStatus:'http://localhost:4000/api/listing/'+params+'/status',
+            getListingDeeplink:'http://localhost:4000/api/listing/'+params+'/deepLink',
         }
     }else{
         return {
@@ -33,6 +34,7 @@ const Endpoints = (params) => {
             uploadProductImage:'https://blue-ribbon.herokuapp.com/api/upload/productImage/',
             updateListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/updateStatus',
             getListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/'+params+'/status',
+            getListingDeeplink:'https://blue-ribbon.herokuapp.com/api/listing/'+params+'/deepLink',
         }
     }
 }

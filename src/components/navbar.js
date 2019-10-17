@@ -116,12 +116,9 @@ const NavBar = (props) => {
     }
 
     if (currentPath.includes('/listing/edit/modifierForm')){
-      return '/listing/edit/pricingForm';
-    }
-
-    if (currentPath.includes('/listing/edit/pricingForm')){
       return '/listing/edit/fulfillmentForm';
     }
+
 
     if (currentPath.includes('/listing/edit/fulfillmentForm')){
       return '/listing/edit/publishForm';

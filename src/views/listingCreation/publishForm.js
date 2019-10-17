@@ -11,19 +11,20 @@ const PublishForm = () => {
     const dispatch = React.useContext(DispatchContext);
 
     const [variant,setVariant]=useState("warning");
+    const [deepLink,setDeeplink] = useState('...');
 
     useEffect(()=>{
+        const status = state.currentListing.status
+        updateBadgeType(status)
 
-        // if (state.currentListing.id !== ''){
-        //     axios.get(Api(state.currentListing.id).getListingStatus)
-        //     .then(res => {
-                // console.log(res.data)
-
-                const status = state.currentListing.status
-                updateBadgeType(status)
-
-        //       })
-        // }
+        if (state.currentListing.id !== ''){
+            axios.get(Api(state.currentListing.id).getListingDeeplink)
+            .then(res => {
+                if (res.data){
+                    setDeeplink(res.data)
+                }
+            })
+        }
 
     })
 
@@ -87,7 +88,7 @@ const PublishForm = () => {
               <Col>
                   <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                       <Form.Label>Deep link</Form.Label>
-                      <Form.Control disabled placeholder="bit.ly/loreal/490430" />
+                      <Form.Control disabled value={deepLink} />
                   </Form.Group>
               </Col>
           </Row>

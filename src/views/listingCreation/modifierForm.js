@@ -76,11 +76,7 @@ const ModifierForm = () => {
         setCarouselFormVisible(false);
         setOptionListFormVisible(false);
         
-        
         if (globalState.currentListing.id && globalState.currentListing.id != ''){
-
-            // {title: "test", prompt: "test", mandatory: true, type: "Product", element: "Textfield"}
-
             axios.post(Api().createModifier, {
               title:obj.title,
               listing_id:globalState.currentListing.id,
@@ -91,8 +87,8 @@ const ModifierForm = () => {
 
               mandatory:obj.mandatory,
 
-              max_value:obj.maxValue,
-              min_value:obj.minValue,
+              maxValue:obj.maxValue,
+              minValue:obj.minValue,
               price_multiplier:obj.pricePerUnit,
 
               placeholder:obj.placeholder,
@@ -101,18 +97,15 @@ const ModifierForm = () => {
               
             }).then(res =>{
               const mod = res.data.modifier;
-              console.log(mod);
               getModifiers();
             });
         }
         
-        console.log(obj)
     }
 
     const removeModifier = (obj) => {
         axios.delete(Api(obj.key).removeModifier)
         .then(res => {
-            console.log(res);
             getModifiers();
         })
     }

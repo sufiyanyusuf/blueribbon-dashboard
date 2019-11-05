@@ -20,7 +20,9 @@ const NewCarouselForm = (props) => {
       title:obj.title, 
       pricing_impact:obj.pricing,
       explainer:obj.explainer,
-      icon:obj.icon 
+      icon:obj.icon,
+      unit:obj.unit,
+      value:obj.value
     }]))
         
   }
@@ -102,8 +104,9 @@ const NewCarouselForm = (props) => {
                 <Form.Control as="select" ref={modifierType}>
                   <option>None</option>
                   <option>Product</option>
-                  <option>Subscription</option>
-                  <option>Delivery</option>
+                  <option>Length</option>
+                  <option>Frequency</option>
+                  <option>Quantity</option>
                 </Form.Control>
               </Form.Group>
               </Col>

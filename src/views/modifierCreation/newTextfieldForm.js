@@ -81,8 +81,6 @@ const NewTextfieldForm = (props) => {
               <Form.Control as="select" ref={modifierType}>
                 <option>None</option>
                 <option>Product</option>
-                <option>Subscription</option>
-                <option>Delivery</option>
               </Form.Control>
             </Form.Group>
             </Col>

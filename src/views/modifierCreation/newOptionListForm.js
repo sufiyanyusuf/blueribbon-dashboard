@@ -19,7 +19,9 @@ const NewOptionListForm = (props) => {
       order:choiceList.length+1,
       title:obj.title, 
       pricing_impact:obj.pricing,
-      explainer:obj.explainer
+      explainer:obj.explainer,
+      unit:obj.unit,
+      value:obj.value
     }]))
         
   }
@@ -103,8 +105,9 @@ const NewOptionListForm = (props) => {
                 <Form.Control as="select" ref={modifierType}>
                   <option>None</option>
                   <option>Product</option>
-                  <option>Subscription</option>
-                  <option>Delivery</option>
+                  <option>Length</option>
+                  <option>Frequency</option>
+                  <option>Quantity</option>
                 </Form.Control>
               </Form.Group>
               </Col>

@@ -90,7 +90,7 @@ const ModifierForm = () => {
               maxValue:obj.maxValue,
               minValue:obj.minValue,
               price_multiplier:obj.pricePerUnit,
-
+              unit:obj.unit,
               placeholder:obj.placeholder,
 
               choices:obj.choices,

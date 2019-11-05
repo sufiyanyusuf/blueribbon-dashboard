@@ -9,6 +9,7 @@ const NewStepperForm = (props) => {
   const maxValue = useRef(null);
   const pricePerUnit= useRef(0);
   const modifierType = useRef(null);
+  const unitTitle = useRef(null);
   
   return (
     <Container>
@@ -63,8 +64,9 @@ const NewStepperForm = (props) => {
               <Form.Control as="select" ref={modifierType}>
                 <option>None</option>
                 <option>Product</option>
-                <option>Subscription</option>
-                <option>Delivery</option>
+                <option>Length</option>
+                <option>Frequency</option>
+                <option>Quantity</option>
               </Form.Control>
             </Form.Group>
             </Col>
@@ -108,6 +110,15 @@ const NewStepperForm = (props) => {
             </Row>
 
             <Row>
+              <Col>
+                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+                    <Form.Label>Unit</Form.Label>
+                    <Form.Control placeholder="Unit" ref={unitTitle}/>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
               <Button onClick = { () => {props.addModifier({
                 title:modifierTitle.current.value,
                 prompt:modifierPrompt.current.value,
@@ -115,6 +126,7 @@ const NewStepperForm = (props) => {
                 maxValue:maxValue.current.value,
                 pricePerUnit:pricePerUnit.current.value,
                 type:modifierType.current.value,
+                unit:unitTitle.current.value,
                 element:"Stepper"
                 })} 
               }>Save & Close</Button>

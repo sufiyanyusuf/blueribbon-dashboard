@@ -31,13 +31,17 @@ const NavBar = (props) => {
       color:'#0A71F2'
     },
     navbarLinks:{
-      paddingTop:10
+      paddingTop:15
     },
     navbarBottomDivider:{
       marginTop:10,
       height:1,
       backgroundColor:"#E7E7E7",
       width:"auto"
+    },
+    logo:{
+      width:50,
+      height:"auto"
     }
   }
 
@@ -139,7 +143,7 @@ const NavBar = (props) => {
           <NavLink to="/" style={{textDecoration:"none"}}>  
             <Col>
               <div style={styles.spacer10}></div>
-              <Image src={require("../assets/img/loreal.svg")} fluid/>
+              <Image style = {styles.logo} src={'https://storage.googleapis.com/blueribbon/Copy%20of%20mnslogo-1.jpg'} fluid/>
             </Col>
           </NavLink>
 

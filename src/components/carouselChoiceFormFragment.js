@@ -9,6 +9,8 @@ const CarouselChoiceFragment = (props) => {
     const choiceTitle = useRef(null);
     const pricingImpact = useRef(null);
     const choiceExplainer = useRef(null);
+    const unitTitle = useRef(null);
+    const unitValue = useRef(null);
     const [choiceIcon,setChoiceIcon] = useState('');
 
     const getUploadParams = async () => {
@@ -67,6 +69,28 @@ const CarouselChoiceFragment = (props) => {
             <div style={styles.spacer20}></div>
 
             <Row>
+              <Col>
+                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+                    <Form.Label>Unit</Form.Label>
+                    <Form.Control placeholder="Unit" ref={unitTitle}/>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <div style={styles.spacer20}></div>
+
+            <Row>
+              <Col>
+                <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
+                    <Form.Label>Value</Form.Label>
+                    <Form.Control placeholder="Value" ref={unitValue}/>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <div style={styles.spacer20}></div>
+
+            <Row>
             <Col>
                 <Form.Group controlId="formBasic" style = {{textAlign:"left"}}>
                 <Form.Label>Upload Icon</Form.Label><br/>
@@ -91,7 +115,9 @@ const CarouselChoiceFragment = (props) => {
               title:choiceTitle.current.value,
               pricing:pricingImpact.current.value,
               explainer:choiceExplainer.current.value,
-              icon:choiceIcon
+              icon:choiceIcon,
+              unit:unitTitle.current.value,
+              value:unitValue.current.value,
               })} 
             }>
                 Add Choice

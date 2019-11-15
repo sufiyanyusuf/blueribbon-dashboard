@@ -21,7 +21,9 @@ import ProductInfoForm from "./views/listingCreation/productInfoForm";
 import ModifierForm from "./views/listingCreation/modifierForm";
 import FulfillmentForm from "./views/listingCreation/fulfillmentForm";
 import PublishForm from "./views/listingCreation/publishForm";
-
+import Sales from './views/Sales';
+import Upcoming from "./views/Upcoming";
+import Referrals from './views/Referrals';
 import reducers from './redux/reducers';
 import globalState from './redux/state';
 import useCombinedReducers from 'use-combined-reducers';
@@ -59,8 +61,10 @@ function App() {
             )}
             <Switch>
               <PrivateRoute exact path="/" component={Listing} />
+              <PrivateRoute path="/sales" component={Sales} />
               <PrivateRoute path="/profile" component={Profile} />
-              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/referrals" component={Referrals} />
+              <PrivateRoute path="/upcoming" component={Upcoming} />
               <Route path="/listing/edit/locationForm" component={LocationForm} />
               <Route path="/listing/edit/modifierForm" component={ModifierForm} />
               <Route path="/listing/edit/fulfillmentForm" component={FulfillmentForm} />

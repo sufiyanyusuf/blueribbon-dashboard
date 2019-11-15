@@ -1,10 +1,9 @@
 {
   "name": "Blueribbon Dashboard",
-  "description": "This app does one little thing, and does it well.",
-
+  "description": "Dashboard for Blueribbon.io",
   "buildpacks": [
     {
       "url": "https://github.com/mars/create-react-app-buildpack.git"
     }
-  ],
+  ]
 }

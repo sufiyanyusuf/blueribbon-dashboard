@@ -142,19 +142,17 @@ const NavBar = (props) => {
         <Row>
           <NavLink to="/" style={{textDecoration:"none"}}>  
             <Col>
-              <div style={styles.spacer10}></div>
               <Image style = {styles.logo} src={'https://storage.googleapis.com/blueribbon/Copy%20of%20mnslogo-1.jpg'} fluid/>
             </Col>
           </NavLink>
 
-        
-          {/* <Col md={1}><Logo/></Col> */}
-
+      
           <Col sm style={styles.navbarLinks}>
             <MenuLink activeOnlyWhenExact={true} to="/" label="Listing" />
-            <MenuLink to="/profile" label="Upcoming" />
+            <MenuLink to="/upcoming" label="Upcoming" />
+            <MenuLink to="/referrals" label="Referrals" />
+            <MenuLink to="/sales" label="Sales" />
             <MenuLink to="/profile" label="Customers" />
-            <MenuLink to="/profile" label="Sales" />
             <MenuLink to="/profile" label="Issues" />
           </Col>
 

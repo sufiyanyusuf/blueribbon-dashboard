@@ -1,6 +1,7 @@
 
 const Endpoints = (params) => {
 
+    
     const environment = process.env.NODE_ENV;
     if (environment === 'development'){
         return {

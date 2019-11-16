@@ -3,7 +3,7 @@
   "description": "Dashboard for Blueribbon.io",
   "buildpacks": [
     {
-      "url": "https://github.com/mars/create-react-app-buildpack.git"
+      "url": "https://github.com/mars/create-react-app-buildpack"
     }
   ]
 }

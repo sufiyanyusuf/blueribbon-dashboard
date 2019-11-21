@@ -22,20 +22,20 @@ const Endpoints = (params) => {
         }
     }else{
         return {
-            getListing:'https://blue-ribbon.herokuapp.com/api/organizations/listing/2',
-            createListing:'https://blue-ribbon.herokuapp.com/api/listing/create',
-            getModifiers:'https://blue-ribbon.herokuapp.com/api/modifier/'+params,
-            createModifier:'https://blue-ribbon.herokuapp.com/api/modifier/create',
-            getProductInfo:'https://blue-ribbon.herokuapp.com/api/productInfo/'+params,
-            removeModifier:'https://blue-ribbon.herokuapp.com/api/modifier/'+params,
-            updateProductInfo:'https://blue-ribbon.herokuapp.com/api/listing/updateInfo',
-            searchServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/search/'+params,
-            updateServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/update',
-            getServiceAreas:'https://blue-ribbon.herokuapp.com/api/serviceLocations/'+params,
-            uploadProductImage:'https://blue-ribbon.herokuapp.com/api/upload/productImage/',
-            updateListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/updateStatus',
-            getListingStatus:'https://blue-ribbon.herokuapp.com/api/listing/'+params+'/status',
-            getListingDeeplink:'https://blue-ribbon.herokuapp.com/api/listing/'+params+'/deepLink',
+            getListing:'https://api.blueribbon.io/api/organizations/listing/2',
+            createListing:'https://api.blueribbon.io/api/listing/create',
+            getModifiers:'https://api.blueribbon.io/api/modifier/'+params,
+            createModifier:'https://api.blueribbon.io/api/modifier/create',
+            getProductInfo:'https://api.blueribbon.io/api/productInfo/'+params,
+            removeModifier:'https://api.blueribbon.io/api/modifier/'+params,
+            updateProductInfo:'https://api.blueribbon.io/api/listing/updateInfo',
+            searchServiceAreas:'https://api.blueribbon.io/api/serviceLocations/search/'+params,
+            updateServiceAreas:'https://api.blueribbon.io/api/serviceLocations/update',
+            getServiceAreas:'https://api.blueribbon.io/api/serviceLocations/'+params,
+            uploadProductImage:'https://api.blueribbon.io/api/upload/productImage/',
+            updateListingStatus:'https://api.blueribbon.io/api/listing/updateStatus',
+            getListingStatus:'https://api.blueribbon.io/api/listing/'+params+'/status',
+            getListingDeeplink:'https://api.blueribbon.io/api/listing/'+params+'/deepLink',
         }
     }
 }

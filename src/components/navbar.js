@@ -149,7 +149,7 @@ const NavBar = (props) => {
       
           <Col sm style={styles.navbarLinks}>
             <MenuLink activeOnlyWhenExact={true} to="/" label="Listing" />
-            <MenuLink to="/upcoming" label="Upcoming" />
+            <MenuLink to="/upcoming" label="Orders" />
             <MenuLink to="/referrals" label="Referrals" />
             <MenuLink to="/sales" label="Sales" />
             <MenuLink to="/profile" label="Customers" />

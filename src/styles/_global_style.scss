@@ -4,6 +4,7 @@
 @include font-face(TTCommons-Regular, "../assets/fonts/TTCommons-Regular", null, null, ttf);
 
 $primary-color: #0A71F2;
+$white: rgb(255, 255, 255);
 
 h1 {
     font-family: TTCommons-Bold;
@@ -19,4 +20,23 @@ h3 {
 h5 {
     font-family: TTCommons-Bold;
     font-size: 24px;
+}
+
+.btn-white{
+    background: $white;
+    &:hover{
+        background-color: darken( $white, 3%)!important;
+    }
+    &:active {
+        background-color: darken( $white, 1%)!important;
+    }
+    &.active {
+        background-color: darken( $white, 10%)!important;
+    }
+}
+.btn{
+    padding-bottom: 4px;
+}
+.btn:focus {
+    box-shadow: none;
 }

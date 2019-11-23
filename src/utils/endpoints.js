@@ -19,6 +19,7 @@ const Endpoints = (params) => {
             updateListingStatus:'http://localhost:4000/api/listing/updateStatus',
             getListingStatus:'http://localhost:4000/api/listing/'+params+'/status',
             getListingDeeplink:'http://localhost:4000/api/listing/'+params+'/deepLink',
+            getOrders:'http://localhost:4000/orderManagement/getOrders/'+params,
         }
     }else{
         return {
@@ -36,6 +37,7 @@ const Endpoints = (params) => {
             updateListingStatus:'https://api.blueribbon.io/api/listing/updateStatus',
             getListingStatus:'https://api.blueribbon.io/api/listing/'+params+'/status',
             getListingDeeplink:'https://api.blueribbon.io/api/listing/'+params+'/deepLink',
+            getOrders:'https://api.blueribbon.io/orderManagement/getOrders/'+params,
         }
     }
 }

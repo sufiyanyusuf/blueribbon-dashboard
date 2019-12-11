@@ -124,3 +124,52 @@ export const getListingDeeplink = async (token,params) => {
 export const getImageUploadUrl = () => {
     return endpoints().uploadImage
 }
+
+
+
+export const getServiceAreas = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.get(endpoints(params).getServiceAreas, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const searchServiceAreas = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.get(endpoints(params).searchServiceAreas, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const updateServiceAreas = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.post(endpoints().updateServiceAreas, params,config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+

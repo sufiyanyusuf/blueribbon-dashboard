@@ -18,9 +18,9 @@ const Endpoints = (params,) => {
             getProductInfo:'http://localhost:4000/business/listing/getProductInfo/'+params,
             
             //Service Areas
-            searchServiceAreas:'http://localhost:4000/api/serviceLocations/search/'+params,
-            updateServiceAreas:'http://localhost:4000/api/serviceLocations/update',
-            getServiceAreas:'http://localhost:4000/api/serviceLocations/'+params,
+            searchServiceAreas:'http://localhost:4000/business/serviceLocations/search/'+params,
+            updateServiceAreas:'http://localhost:4000/business/serviceLocations/update',
+            getServiceAreas:'http://localhost:4000/business/serviceLocations/'+params,
 
             //Modifiers
             getModifiers:'http://localhost:4000/api/modifier/'+params,

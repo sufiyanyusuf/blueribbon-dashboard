@@ -3,8 +3,7 @@ import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-boot
 import Tile from "../../components/tile";
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
-import axios from 'axios';
-import Api from '../../utils/endpoints';
+import {getProductInfo, getImageUploadUrl} from '../../utils/Api'
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 
@@ -19,23 +18,38 @@ const ProductInfoForm = () => {
   const descriptionRef = useRef(null);
 
   useEffect(() => {
-    if (state.currentListing.id !== ''){
-      axios.get(Api(state.currentListing.id).getProductInfo)
-      .then(res => {
-        let productInfo = {
-          id:res.data.id,
-          title: res.data.title,
-          description:res.data.description, 
-          unit:res.data.unit_title,
-          type:res.data.type,
-          currency:res.data.currency,
-          basePrice:res.data.base_price,
-          listing_id:res.data.listing_id
+
+    if (state.currentListing.id !== '') {
+      
+      const fetchProductInfo = async () => {
+        try {
+          let token = state.accessToken
+          let listingId = state.currentListing.id
+          let product = await getProductInfo(token, listingId)
+
+          let productInfo = {
+            id:product.id,
+            title: product.title,
+            description:product.description, 
+            unit:product.unit_title,
+            type:product.type,
+            currency:product.currency,
+            basePrice:product.base_price,
+            listing_id:product.listing_id
+          }
+
+          if (state.currentProductInfo.id !== productInfo.id){
+            dispatch({type:Actions.productInfo.updateProductInfo,productInfo:productInfo});
+          }
+      
+        } catch (e) {
+          console.log(e)
         }
-        if (state.currentProductInfo.id !== productInfo.id){
-          dispatch({type:Actions.productInfo.updateProductInfo,productInfo:productInfo});
-        }
-        });
+  
+      }
+
+      fetchProductInfo()
+
     }
   
   });
@@ -92,7 +106,12 @@ const ProductInfoForm = () => {
   };
 
   const getUploadParams = async () => {
-    return { url: Api().uploadProductImage }
+    let token = state.accessToken
+    let headers = {
+        'Authorization': "bearer " + token
+    }
+    let url = getImageUploadUrl()
+    return { url: url, headers: headers}
   }
 
   const handleChangeStatus = ({ xhr,meta, remove }, status) => {

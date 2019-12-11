@@ -3,7 +3,7 @@ import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-boot
 import CarouselChoiceFragment from '../../components/carouselChoiceFormFragment';
 import ListItem from '../../components/carouselChoicesListItem';
 
-const NewCarouselForm = (props) => {
+const NewCarouselForm = (props,accessToken) => {
 
   const [choiceList,addToChoiceList] = useState([]);
   const modifierTitle = useRef(null);
@@ -120,7 +120,7 @@ const NewCarouselForm = (props) => {
               </h2>
             </Row>
 
-            <CarouselChoiceFragment addChoice = {addChoice}/>
+        <CarouselChoiceFragment addChoice={addChoice} accessToken={accessToken}/>
 
             <div style = {styles.leftTextAlign}>
               <ChoiceList/>

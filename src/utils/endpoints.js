@@ -14,8 +14,8 @@ const Endpoints = (params,) => {
             
             //Product Info
             updateProductInfo: 'http://localhost:4000/business/listing/updateInfo',
-            uploadProductImage:'http://localhost:4000/api/upload/productImage/',
-            getProductInfo:'http://localhost:4000/api/productInfo/'+params,
+            uploadImage:'http://localhost:4000/business/upload/productImage/',
+            getProductInfo:'http://localhost:4000/business/listing/getProductInfo/'+params,
             
             //Service Areas
             searchServiceAreas:'http://localhost:4000/api/serviceLocations/search/'+params,
@@ -46,7 +46,7 @@ const Endpoints = (params,) => {
             searchServiceAreas:'https://api.blueribbon.io/api/serviceLocations/search/'+params,
             updateServiceAreas:'https://api.blueribbon.io/api/serviceLocations/update',
             getServiceAreas:'https://api.blueribbon.io/api/serviceLocations/'+params,
-            uploadProductImage:'https://api.blueribbon.io/api/upload/productImage/',
+            uploadImage:'https://api.blueribbon.io/api/upload/productImage/',
             updateListingStatus:'https://api.blueribbon.io/api/listing/updateStatus',
             getListingStatus:'https://api.blueribbon.io/api/listing/'+params+'/status',
             getListingDeeplink:'https://api.blueribbon.io/api/listing/'+params+'/deepLink',

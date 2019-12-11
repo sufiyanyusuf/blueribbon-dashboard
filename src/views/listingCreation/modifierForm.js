@@ -17,13 +17,14 @@ import Api from '../../utils/endpoints'
 
 const ModifierForm = () => {  
 
-  const [showOptionListForm, setOptionListFormVisible] = useState(false);
-  const [showCarouselForm, setCarouselFormVisible] = useState(false);
-  const [showStepperForm, setStepperFormVisible] = useState(false);
-  const [showTextfieldForm, setTextfieldFormVisible] = useState(false);
+    const state = React.useContext(StateContext);
+    const [showOptionListForm, setOptionListFormVisible] = useState(false);
+    const [showCarouselForm, setCarouselFormVisible] = useState(false);
+    const [showStepperForm, setStepperFormVisible] = useState(false);
+    const [showTextfieldForm, setTextfieldFormVisible] = useState(false);
 
-  const globalState = React.useContext(StateContext);
-  const dispatch = React.useContext(DispatchContext);
+    const globalState = React.useContext(StateContext);
+    const dispatch = React.useContext(DispatchContext);
 
     useEffect(() => {
         // Fetch lists
@@ -149,7 +150,7 @@ const ModifierForm = () => {
                 <Container>
                     <Row>
                         <Col md={{ span: 8, offset: 1 }}>
-                            <NewCarouselForm addModifier={addModifier}/>
+                                <NewCarouselForm addModifier={addModifier} accessToken={state.accessToken}/>
                         </Col>
                     </Row>
                 </Container>

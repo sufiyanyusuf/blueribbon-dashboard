@@ -2,9 +2,10 @@ import React, {useRef,useState} from "react";
 import { Container,Row,Col,FormControl,Button,Form,Breadcrumb } from "react-bootstrap";
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
-import Api from '../utils/endpoints';
 
-const CarouselChoiceFragment = (props) => {
+import {getImageUploadUrl} from '../utils/Api'
+
+const CarouselChoiceFragment = (props,accessToken) => {
     
     const choiceTitle = useRef(null);
     const pricingImpact = useRef(null);
@@ -14,7 +15,12 @@ const CarouselChoiceFragment = (props) => {
     const [choiceIcon,setChoiceIcon] = useState('');
 
     const getUploadParams = async () => {
-        return { url: Api().uploadProductImage }
+        let token = accessToken
+        let headers = {
+            'Authorization': "bearer " + token
+        }
+        let url = getImageUploadUrl()
+        return { url: url, headers: headers}
     }
     
     const handleChangeStatus = ({ xhr,meta, remove }, status) => {

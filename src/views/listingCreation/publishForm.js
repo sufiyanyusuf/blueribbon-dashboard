@@ -1,8 +1,7 @@
 import React, {useState,useEffect} from "react";
 import { Container,Row,Col,Button,Form,DropdownButton,Dropdown,ButtonGroup } from "react-bootstrap";
 import {StateContext,DispatchContext} from '../../redux/contexts';
-import { updateListingStatus } from '../../utils/Api' 
-import { getListingDeeplink } from '../../utils/Api'
+import { getListingDeeplink,updateListingStatus } from '../../utils/Api' 
 
 import Actions from '../../redux/actions';
 

@@ -16,6 +16,21 @@ export const createListing = async (token,bodyParams) => {
     })
 }
 
+export const getProductInfo = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token }};
+            let res = await axios.get(endpoints(params).getProductInfo, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 export const updateProductInfo = async (token,bodyParams) => {
     return new Promise(async (resolve, reject) => {
         if (!token) {
@@ -106,4 +121,6 @@ export const getListingDeeplink = async (token,params) => {
     })
 }
 
-
+export const getImageUploadUrl = () => {
+    return endpoints().uploadImage
+}

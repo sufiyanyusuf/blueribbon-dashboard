@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import './styles/index.css'
 
@@ -27,8 +27,10 @@ import Referrals from './views/Referrals';
 import reducers from './redux/reducers';
 import globalState from './redux/state';
 import useCombinedReducers from 'use-combined-reducers';
+import {getBusinessProfile} from './utils/Api'
 
 import { StateContext, DispatchContext } from './redux/contexts';
+import actions from 'redux/actions';
 
 function App() {
 
@@ -37,10 +39,12 @@ function App() {
     currentProductInfo: React.useReducer(reducers.productInfoReducer, globalState.currentProductInfo),
     currentListing: React.useReducer(reducers.currentListingReducer, globalState.currentListing),
     currentModifiers: React.useReducer(reducers.modifierReducer, globalState.currentModifiers),
-    currentServiceAreas:React.useReducer(reducers.serviceAreasReducer, globalState.currentServiceAreas)
+    currentServiceAreas: React.useReducer(reducers.serviceAreasReducer, globalState.currentServiceAreas),
+    accessToken: React.useReducer(reducers.accessTokenReducer, globalState.accessToken),
+    businessProfile: React.useReducer(reducers.businessProfileReducer, globalState.businessProfile),
   });
 
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, getTokenSilently, user } = useAuth0();
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
@@ -49,6 +53,24 @@ function App() {
         : <Component {...props} />
     )} />
   )
+
+  useEffect(() => {
+
+    const getAccessToken = async () => {
+      try {
+        const token = await getTokenSilently();
+        const profile = await getBusinessProfile(token);
+        
+        dispatch({type:actions.token.setToken, token: token })
+        dispatch({type:actions.businessProfile.setProfile, profile: profile })
+
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getAccessToken()
+  }, [user])
+
 
   return (
 

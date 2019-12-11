@@ -113,13 +113,34 @@ import { Action } from 'rxjs/internal/scheduler/Action';
         return state;
     }
   };
+  
+const accessTokenReducer = (state, action) => {
+  switch (action.type){
+    case Actions.token.setToken:
+      return action.token;
+    default:    
+      return state;
+  }
+}
+
+const businessProfileReducer = (state, action) => {
+    switch (action.type){
+      case Actions.businessProfile.setProfile:
+        console.log('profile', action.profile)
+        return {id:action.profile.id,title:action.profile.title,logo:action.profile.logo}
+      default:
+          return state;
+    }
+  }
 
   const reducers = {
-      "listingReducer":listingReducer,
-      "productInfoReducer":productInfoReducer,
-      'currentListingReducer':currentListingReducer,
-      'modifierReducer':modifierReducer,
-      'serviceAreasReducer':serviceAreasReducer,
+    "listingReducer":listingReducer,
+    "productInfoReducer":productInfoReducer,
+    'currentListingReducer':currentListingReducer,
+    'modifierReducer':modifierReducer,
+    'serviceAreasReducer': serviceAreasReducer,
+    'accessTokenReducer': accessTokenReducer,
+    'businessProfileReducer':businessProfileReducer
   };
 
   export default reducers;

@@ -49,7 +49,8 @@ const PublishForm = () => {
     }
 
 
-    const changeListingStatus = (status)=>{
+    const changeListingStatus = (status) => {
+        
         console.log(status)
         if (state.currentListing.id !== ''){
             axios.post(Api().updateListingStatus, {

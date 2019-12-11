@@ -9,6 +9,9 @@ import {StateContext,DispatchContext} from '../redux/contexts';
 import Actions from '../redux/actions';
 import axios from 'axios';
 import Api from '../utils/endpoints'
+import { createListing, updateProductInfo } from '../utils/Api'
+
+
 const NavBar = (props) => {
 
   const showNewSubNav = props.location.pathname.includes('/listing/edit');
@@ -28,7 +31,7 @@ const NavBar = (props) => {
     },
     activeLink:{
       textDecoration:"none",
-      color:'#0A71F2'
+      color:'#2C43A3'
     },
     navbarLinks:{
       paddingTop:15
@@ -57,23 +60,24 @@ const NavBar = (props) => {
     );
   }
 
-  const nextPressed = (currentPath)=>{
+  const nextPressed = async (currentPath) => {
 
     if (currentPath.includes('/listing/edit/productInfo')){
       
-      console.log('gonna request, prestate - ',state.currentProductInfo);
-
       if (state.currentListing.id === ''){
 
-        axios.post(Api().createListing, {
-          title:state.currentProductInfo.title,
-          org_id:2,
-          description:state.currentProductInfo.description,
-          type:'product',
-          image_url:state.currentProductInfo.imageUrl,
-          currency:state.currentProductInfo.currency,
-          base_price:state.currentProductInfo.basePrice
-        }).then(res =>{
+        try {
+
+          let params = {
+            title:state.currentProductInfo.title,
+            description:state.currentProductInfo.description,
+            type:'product',
+            image_url:state.currentProductInfo.imageUrl,
+            currency:state.currentProductInfo.currency,
+            base_price:state.currentProductInfo.basePrice
+          } 
+
+          const res = await createListing(state.accessToken, params)
           const listing = res.data.listing;
           console.log(listing);
 
@@ -84,25 +88,29 @@ const NavBar = (props) => {
           if (listing.id !== state.currentListingID){
             dispatch({ type: Actions.listing.updateNewListingID, id:listing.id});
           }
-          
-        });
+
+        }catch(e){
+          console.log(e)
+        }
+
+
       }else{
         console.log('update product info for listing id',state.currentListing.id)
-        
-        axios.put(Api().updateProductInfo, {
-          title:state.currentProductInfo.title,
-          org_id:2,
-          description:state.currentProductInfo.description,
-          type:state.currentProductInfo.type,
-          listing_id:state.currentListing.id,
-          image_url:state.currentProductInfo.imageUrl,
-          currency:state.currentProductInfo.currency,
-          base_price:state.currentProductInfo.basePrice
-        }).then(res =>{
-          console.log('updation response',res)
-          //show feedback toast
-        });
-
+          let params = {
+            title:state.currentProductInfo.title,
+            description:state.currentProductInfo.description,
+            type:state.currentProductInfo.type,
+            listing_id:state.currentListing.id,
+            image_url:state.currentProductInfo.imageUrl,
+            currency:state.currentProductInfo.currency,
+            base_price:state.currentProductInfo.basePrice
+          }
+        try {
+          const res = await updateProductInfo(state.accessToken, params)
+          
+        }catch(e){
+          console.log(e)
+        }
       }
 
     }
@@ -132,6 +140,8 @@ const NavBar = (props) => {
 
   }
 
+  console.log(state)
+  
   return (
     <div>
     {(isAuthenticated && !showNewSubNav) && (
@@ -142,7 +152,7 @@ const NavBar = (props) => {
         <Row>
           <NavLink to="/" style={{textDecoration:"none"}}>  
             <Col>
-              <Image style = {styles.logo} src={'https://storage.googleapis.com/blueribbon/Copy%20of%20mnslogo-1.jpg'} fluid/>
+              <Image style = {styles.logo} src={state.businessProfile.logo} fluid/>
             </Col>
           </NavLink>
 
@@ -206,38 +216,6 @@ const NavBar = (props) => {
     )}
     
     </div>
-
-
-    // <div>
-    // {isAuthenticated && (
-    //   <Container fluid={true}>
-    //     <div style={styles.spacer10}></div>
-    //     <Row>
-    //       <Col md={1}><Logo/></Col>
-    //       <Col md={{span:10,offset:0}} style={styles.navbarLinks}>
-    //         <NavLink to="/" style={styles.link} activeStyle={styles.activeLink}>Listing&emsp;</NavLink>
-    //         <NavLink to="/profile" style={styles.link} activeStyle={styles.activeLink}>&emsp;Upcoming&emsp;</NavLink>
-    //         <NavLink to="/profile" style={styles.link} activeStyle={styles.activeLink}>&emsp;Customers&emsp;</NavLink>
-    //         <NavLink to="/profile" style={styles.link} activeStyle={styles.activeLink}>&emsp;Sales&emsp;</NavLink>
-    //         <NavLink to="/profile" style={styles.link} activeStyle={styles.activeLink}>&emsp;Issues</NavLink>
-    //       </Col>
-    //       <Col md={{span:1,offset:0}}><Button onClick={() => logout()}>Logout</Button></Col>
-    //     </Row>
-    //     <Row style={styles.navbarBottomDivider}></Row>
-    //   </Container>
-    // )}
-      
-    // {!isAuthenticated && (
-    //   <button
-    //     onClick={() =>
-    //       loginWithRedirect({})
-    //     }
-    //   >
-    //     Log in
-    //   </button>
-    // )}
-    
-    // </div>
 
 
   );

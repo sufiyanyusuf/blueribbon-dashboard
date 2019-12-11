@@ -1,25 +1,38 @@
 
-const Endpoints = (params) => {
+const Endpoints = (params,) => {
 
     
     const environment = process.env.NODE_ENV;
     if (environment === 'development'){
         return {
-            getListing:'http://localhost:4000/api/organizations/listing/2',
-            createListing:'http://localhost:4000/api/listing/create',
-            getModifiers:'http://localhost:4000/api/modifier/'+params,
-            createModifier:'http://localhost:4000/api/modifier/create',
+            //Listing 
+            getListings:'http://localhost:4000/business/listing',
+            createListing:'http://localhost:4000/business/listing/create',
+            updateListingStatus:'http://localhost:4000/business/listing/updateStatus',
+            getListingStatus:'http://localhost:4000/business/listing/'+params+'/status',
+            getListingDeeplink: 'http://localhost:4000/business/listing/' + params + '/deepLink',
+            
+            //Product Info
+            updateProductInfo: 'http://localhost:4000/business/listing/updateInfo',
+            uploadProductImage:'http://localhost:4000/api/upload/productImage/',
             getProductInfo:'http://localhost:4000/api/productInfo/'+params,
-            removeModifier:'http://localhost:4000/api/modifier/'+params,
-            updateProductInfo:'http://localhost:4000/api/listing/updateInfo',
+            
+            //Service Areas
             searchServiceAreas:'http://localhost:4000/api/serviceLocations/search/'+params,
             updateServiceAreas:'http://localhost:4000/api/serviceLocations/update',
             getServiceAreas:'http://localhost:4000/api/serviceLocations/'+params,
-            uploadProductImage:'http://localhost:4000/api/upload/productImage/',
-            updateListingStatus:'http://localhost:4000/api/listing/updateStatus',
-            getListingStatus:'http://localhost:4000/api/listing/'+params+'/status',
-            getListingDeeplink:'http://localhost:4000/api/listing/'+params+'/deepLink',
+
+            //Modifiers
+            getModifiers:'http://localhost:4000/api/modifier/'+params,
+            createModifier:'http://localhost:4000/api/modifier/create',
+            removeModifier: 'http://localhost:4000/api/modifier/' + params,
+            
+            //OrderManagement
             getOrders:'http://localhost:4000/orderManagement/getOrders/'+params,
+            updateOrderFulfillmentState: 'http://localhost:4000/orderManagement/updateFulfillmentState',
+            
+            //Organization
+            getBusinessProfile:'http://localhost:4000/business/info/',
         }
     }else{
         return {
@@ -38,6 +51,7 @@ const Endpoints = (params) => {
             getListingStatus:'https://api.blueribbon.io/api/listing/'+params+'/status',
             getListingDeeplink:'https://api.blueribbon.io/api/listing/'+params+'/deepLink',
             getOrders:'https://api.blueribbon.io/orderManagement/getOrders/'+params,
+            updateOrderFulfillmentState:'https://api.blueribbon.io/orderManagement/updateFulfillmentState'+params,
         }
     }
 }

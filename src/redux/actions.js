@@ -22,6 +22,12 @@ const actions = {
     },
     serviceAreas:{
         updateServiceAreas:'UPDATE_SERVICE_AREAS'
+    },
+    businessProfile:{
+        setProfile: 'SET_PROFILE'
+    },
+    token: {
+        setToken: 'SET_TOKEN'
     }
 }
 

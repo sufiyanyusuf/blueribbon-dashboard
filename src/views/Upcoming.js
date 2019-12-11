@@ -50,6 +50,22 @@ const Upcoming = () => {
   const [activeTab,setActiveTab] = useState(0)
   const [orders,setOrders] = useState([])
 
+  const markOrder = (action,subscriptionId) => {
+    console.log(action,subscriptionId)
+    if (action && subscriptionId){
+      axios.post(Api().updateOrderFulfillmentState, {
+        action:action,
+        subscriptionId:subscriptionId
+      }).then(res =>{
+          if (res.status == 200){
+              setActiveTab(activeTab)
+          }else{
+              console.log('error')
+          }
+          //show feedback toast
+    });
+    }
+  }
 
   const getOrderCards = () => {
     if (orders.length < 1){
@@ -57,28 +73,31 @@ const Upcoming = () => {
     }
 
     return orders.map((order,index) => {
-
-      const orderProps = order.order[0].Product
       
-      var _order = ''
-      Object.keys(orderProps).map((key,index) => {
-        _order=_order + capitalize(key)+' - '+Object.values(orderProps)[index]+'\n'
-      })
+      if (order && order.order && order.order.length>1 ){
+
+        const orderProps = order.order[0].Product
+
+        var _order = ''
+        Object.keys(orderProps).map((key,index) => {
+          _order=_order + capitalize(key)+' - '+Object.values(orderProps)[index]+'\n'
+        })
+      
+      }
 
       const getOrderActions = () => {
         if (order.fulfillment_options && order.fulfillment_options.length>0){
           return order.fulfillment_options.map ( option => {
-            return (<Dropdown.Item href="#/action-1">{option}</Dropdown.Item>)
+            return (<Dropdown.Item onSelect={()=>markOrder(option,order.subscription_id)}>{option}</Dropdown.Item>)
           })
         }
       }
-
 
       
       return (
         <Card>
           <Card.Body>
-          <Card.Title><h5>{order.title}</h5></Card.Title>
+          <Card.Title><h5>{order.subscription_id}</h5></Card.Title>
           <Card.Text>
             {_order}
           </Card.Text>
@@ -127,10 +146,10 @@ const Upcoming = () => {
         param = 'shipped'
         break
       case 4:
-        param = 'successful'
+        param = 'failure'
         break
       case 5:
-        param = 'failure'
+        param = 'successful'
         break
       default:
         param = 'pending'

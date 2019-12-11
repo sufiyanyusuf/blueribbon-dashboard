@@ -173,3 +173,51 @@ export const updateServiceAreas = async (token,params) => {
 }
 
 
+
+export const getModifiers = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.get(endpoints(params).getModifiers, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const createModifier = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.post(endpoints().createModifier, params, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const removeModifier = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.delete(endpoints(params).removeModifier, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+
+

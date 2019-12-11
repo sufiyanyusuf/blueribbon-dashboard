@@ -23,9 +23,9 @@ const Endpoints = (params,) => {
             getServiceAreas:'http://localhost:4000/business/serviceLocations/'+params,
 
             //Modifiers
-            getModifiers:'http://localhost:4000/api/modifier/'+params,
-            createModifier:'http://localhost:4000/api/modifier/create',
-            removeModifier: 'http://localhost:4000/api/modifier/' + params,
+            getModifiers:'http://localhost:4000/business/modifier/'+params,
+            createModifier:'http://localhost:4000/business/modifier/create',
+            removeModifier: 'http://localhost:4000/business/modifier/remove/' + params,
             
             //OrderManagement
             getOrders:'http://localhost:4000/orderManagement/getOrders/'+params,

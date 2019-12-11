@@ -9,52 +9,51 @@ import NewCarouselForm from "../../views/modifierCreation/newCarouselForm";
 import NewStepperForm from "../../views/modifierCreation/newStepperForm";
 import NewTextfieldForm from "../../views/modifierCreation/newTextfieldForm";
 
-import axios from 'axios';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
-import Api from '../../utils/endpoints'
-
+import { getModifiers,createModifier,removeModifier } from '../../utils/Api'
 
 const ModifierForm = () => {  
 
-    const state = React.useContext(StateContext);
     const [showOptionListForm, setOptionListFormVisible] = useState(false);
     const [showCarouselForm, setCarouselFormVisible] = useState(false);
     const [showStepperForm, setStepperFormVisible] = useState(false);
     const [showTextfieldForm, setTextfieldFormVisible] = useState(false);
 
-    const globalState = React.useContext(StateContext);
+    const state = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
     useEffect(() => {
         // Fetch lists
-        getModifiers()
+        fetchModifiers()
     });
 
-    function getModifiers(){
+    const fetchModifiers = async() => {
 
-        console.log('get mods') 
-        axios.get(Api(globalState.currentListing.id).getModifiers)
-        .then(res => {
-            console.log(res.data);
-            //update store
-            const modifiers = res.data;
+        try {
+            let token = state.accessToken
+            let params = state.currentListing.id
+            let modifiers = await getModifiers(token, params)
             let _modifiers = modifiers.map((modifier) => {
-            return {
-                key: modifier.id,
-                title: modifier.title,
-                element:modifier.element_type,
-                type:modifier.type,
-                default:modifier.default,
-                order: modifier.order
-            }
+                return {
+                    key: modifier.id,
+                    title: modifier.title,
+                    element: modifier.element_type,
+                    type: modifier.type,
+                    default: modifier.default,
+                    order: modifier.order
+                }
             });
 
             //check for change before dispatch
-            if (JSON.stringify(_modifiers)!==JSON.stringify(globalState.currentModifiers)){
-            dispatch({ type: Actions.modifier.setModifiers, modifiers:_modifiers});
+            if (JSON.stringify(_modifiers)!==JSON.stringify(state.currentModifiers)){
+                dispatch({ type: Actions.modifier.setModifiers, modifiers:_modifiers});
             }
-        })
+            
+        } catch (error) {
+            
+        }
+
     }
 
     function ModifierList(props) {
@@ -70,45 +69,57 @@ const ModifierForm = () => {
     // const defaultModifiers = [{key:1,order:"1",title:"title",element:"element",type:"type",default:"default"},{key:2,order:"2",title:"title",element:"element",type:"type",default:"default"}];
     // const [modifiers, updateModifierList] = useState(defaultModifiers);
 
-    const addModifier = (obj) => {
+    const addModifier = async (obj) => {
 
         setTextfieldFormVisible(false);
         setStepperFormVisible(false);
         setCarouselFormVisible(false);
         setOptionListFormVisible(false);
         
-        if (globalState.currentListing.id && globalState.currentListing.id != ''){
-            axios.post(Api().createModifier, {
-              title:obj.title,
-              listing_id:globalState.currentListing.id,
-              description:obj.prompt,
-              type:obj.type,
-              element_type:obj.element,
-              order: globalState.currentModifiers.length + 1,
+        try {
+            let token = state.accessToken
+            let params = {
 
-              mandatory:obj.mandatory,
+                title:obj.title,
+                listing_id:state.currentListing.id,
+                description:obj.prompt,
+                type:obj.type,
+                element_type:obj.element,
+                order: state.currentModifiers.length + 1,
+  
+                mandatory:obj.mandatory,
+  
+                maxValue:obj.maxValue,
+                minValue:obj.minValue,
+                price_multiplier:obj.pricePerUnit,
+                unit:obj.unit,
+                placeholder:obj.placeholder,
+  
+                choices:obj.choices,
+                
+            }
 
-              maxValue:obj.maxValue,
-              minValue:obj.minValue,
-              price_multiplier:obj.pricePerUnit,
-              unit:obj.unit,
-              placeholder:obj.placeholder,
+            let modifier = await createModifier(token, params)
+            fetchModifiers()
 
-              choices:obj.choices,
-              
-            }).then(res =>{
-              const mod = res.data.modifier;
-              getModifiers();
-            });
+        } catch (error) {
+            
         }
+
         
     }
 
-    const removeModifier = (obj) => {
-        axios.delete(Api(obj.key).removeModifier)
-        .then(res => {
-            getModifiers();
-        })
+    const deleteModifier = async (obj) => {
+
+        try {
+            let token = state.accessToken
+            let params = obj.key
+            let removedModifier = await removeModifier(token,params)
+            fetchModifiers()
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -230,7 +241,7 @@ const ModifierForm = () => {
 
         <div style = {styles.leftTextAlign}>
             <ListHeader/>
-            <ModifierList items={globalState.currentModifiers} remove = {removeModifier}/>
+            <ModifierList items={state.currentModifiers} remove = {deleteModifier}/>
         </div>
 
 

@@ -1,8 +1,9 @@
 import React, {useState,useEffect} from "react";
 import { Container,Row,Col,Button,Form,DropdownButton,Dropdown,ButtonGroup } from "react-bootstrap";
 import {StateContext,DispatchContext} from '../../redux/contexts';
-import axios from 'axios';
-import Api from '../../utils/endpoints';
+import { updateListingStatus } from '../../utils/Api' 
+import { getListingDeeplink } from '../../utils/Api'
+
 import Actions from '../../redux/actions';
 
 const PublishForm = () => {
@@ -17,16 +18,21 @@ const PublishForm = () => {
         const status = state.currentListing.status
         updateBadgeType(status)
 
-        if (state.currentListing.id !== ''){
-            axios.get(Api(state.currentListing.id).getListingDeeplink)
-            .then(res => {
-                if (res.data){
-                    setDeeplink(res.data)
+        const getLink = async () => {
+     
+            if (state.currentListing.id !== '') {
+                try {
+                    let token = state.accessToken
+                    let params = state.currentListing.id
+                    let link = await getListingDeeplink(token, params)
+                    setDeeplink(link)
+                } catch (e) {
+                    console.log(e)
                 }
-            })
+            }
         }
-
-    })
+        getLink()
+    },[])
 
     const updateBadgeType = (status) => {
         if (status){
@@ -48,24 +54,23 @@ const PublishForm = () => {
         }
     }
 
-
-    const changeListingStatus = (status) => {
+    const changeListingStatus = async (status) => {
         
-        console.log(status)
-        if (state.currentListing.id !== ''){
-            axios.post(Api().updateListingStatus, {
-                listing_id:state.currentListing.id,
-                status:status
-            }).then(res =>{
-                if (res.status == 200){
-                    console.log(res.data)
-                    updateBadgeType(status);
-                    dispatch({type: Actions.listing.updateCurrentListingStatus, status:status});
-                }else{
-                    console.log('error')
+        if (state.currentListing.id !== '') {
+            try {
+                let params = {
+                    listing_id: state.currentListing.id,
+                    status: status
                 }
-                //show feedback toast
-            });
+                let token = state.accessToken
+                let res = await updateListingStatus (token, params)
+                updateBadgeType(status);
+                dispatch({type: Actions.listing.updateCurrentListingStatus, status:status});
+                
+            } catch (e) {
+                console.log(e)
+            }
+
         }
     }
 

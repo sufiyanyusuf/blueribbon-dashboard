@@ -61,5 +61,49 @@ export const getBusinessProfile = async (token) => {
     })
 }
 
+export const updateListingStatus = async (token, bodyParams) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token }};
+            let res = await axios.post(endpoints().updateListingStatus, bodyParams, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const getListingStatus = async (token) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token }};
+            let res = await axios.get(endpoints().getListingStatus, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const getListingDeeplink = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.get(endpoints(params).getListingDeeplink, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 
 

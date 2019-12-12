@@ -1,4 +1,7 @@
 {
   "domain": "blue-ribbon-dashboard.auth0.com",
-  "clientId": "CItKV2lhHTZstLV8vzjDr4OWyffeHwL7"
+  "clientId": "CItKV2lhHTZstLV8vzjDr4OWyffeHwL7",
+  "redirect_uri": "http://localhost:3000",
+  "audience": "https://api.blueribbon.io/business/",
+  "scope":"https://api.blueribbon.io/business/user/app_metadata/"
 }

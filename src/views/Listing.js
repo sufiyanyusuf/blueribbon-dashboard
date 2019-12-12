@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect, useState} from "react";
 import { useAuth0 } from "../react-auth0-wrapper";
 import { Container,Row,Col } from "react-bootstrap";
 import Tile from "../components/tile";
@@ -6,24 +6,29 @@ import ListHeader from "../components/subscriptionListHeader";
 import ListItem from "../components/subscriptionListItem";
 import {NavLink} from 'react-router-dom';
 import {StateContext,DispatchContext} from '../redux/contexts';
-import axios from 'axios';
+
 import Actions from '../redux/actions';
-import Api from '../utils/endpoints';
+import {getListings} from '../utils/Api';
 
 const Listing = () => {
 
   const state = React.useContext(StateContext);
   const dispatch = React.useContext(DispatchContext);
-  const { loading, user } = useAuth0();
-
+  const { loading, user, getIdTokenClaims } = useAuth0();
 
   useEffect(() => {
     // Fetch lists
-    axios.get(Api().getListing)
-      .then(res => {
-        
+ 
+    const fetchListings = async () => { 
 
-        const listings = res.data[0].listings;
+      try { 
+
+        let token = state.accessToken
+        let res = await getListings(token)
+        
+        console.log(res)
+
+        const listings = res.data;
         let _listings = listings.map((listing) => {
 
           const options = {year: 'numeric', month: 'short', day: 'numeric' };
@@ -31,12 +36,13 @@ const Listing = () => {
           const formattedDate = date.toLocaleDateString("en-US", options);
 
           return {
-             key: listing.id,
-             date: formattedDate,
-             title: listing.title,
-             status:listing.status,
-             count: 0
+            key: listing.id,
+            date: formattedDate,
+            title: listing.title,
+            status:listing.status,
+            count: 0
           }
+          
         });
 
         //check for change before dispatch
@@ -53,8 +59,19 @@ const Listing = () => {
           dispatch({type:Actions.productInfo.clear});
         }
         
-      })
-  });
+      
+        
+      } catch (e) {
+        console.log(e)
+      }
+      
+
+    }
+
+    fetchListings()
+  
+    
+  },[]);
 
 
 
@@ -66,7 +83,6 @@ const Listing = () => {
 
   const selectListing = (listing) => {
     if (state.currentListing.id !== listing.key){
-      // dispatch({type:Actions.listing.updateNewListingID,id:listing.key});
       dispatch({type:Actions.listing.updateCurrentListing,listing:listing});
     }
     

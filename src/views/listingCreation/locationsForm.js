@@ -7,60 +7,63 @@ import Map from '../../components/map';
 import GoogleMap from '../../components/googleMaps';
 import {StateContext,DispatchContext} from '../../redux/contexts';
 import Actions from '../../redux/actions';
-import Api from '../../utils/endpoints';
-import axios from 'axios';
+import { getServiceAreas, searchServiceAreas, updateServiceAreas } from '../../utils/Api'
 import AsyncSelect from 'react-select/async';
 
 const LocationForm = () => {
     
-    const globalState = React.useContext(StateContext);
+    const state = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
 
     useEffect (()=>{
+        const fetchAreas = async() => {
+            try {
+                let token = state.accessToken
+                let serviceAreas = await getServiceAreas(token, state.currentListing.id)
+                
+                const areas = serviceAreas.map(area => {
+                    return {
+                        label:area.label,
+                        value:area.data_id,
+                        data_id:area.data_id,
+                        polygon:area.polygon.data
+                    }
+                });  
     
-        axios.get(Api(globalState.currentListing.id).getServiceAreas)
-      .then(res => {
-        if (res.data){
-            const areas = res.data.map(area => {
-                return {
-                    label:area.label,
-                    value:area.data_id,
-                    data_id:area.data_id,
-                    polygon:area.polygon.data
+                if (JSON.stringify(areas)!==JSON.stringify(state.currentServiceAreas)){
+                    dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:areas});
                 }
-            });  
-
-            if (JSON.stringify(areas)!==JSON.stringify(globalState.currentServiceAreas)){
-                dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:areas});
+            } catch (error) {
+                console.log(error)
             }
         }
-      })
+        fetchAreas()
     })
 
     const getPolygonsFromState = () => {
-        const polygons = globalState.currentServiceAreas.map ((area)=>{
+        const polygons = state.currentServiceAreas.map ((area)=>{
             return area.polygon
         })
         return polygons
     }
 
-    const loadSearchOptions = (inputValue, callback) => {
+    const loadSearchOptions = async (inputValue, callback) => {
         if (!inputValue) {
             return callback([]);
         }
         
-        axios.get(Api(inputValue).searchServiceAreas)
-        .then(res => {
-            const results = res.data;
+        try {
+            let token = state.accessToken
+            let results = await searchServiceAreas(token, inputValue)
             callback (results.areas);
-        })
-        .catch(function (error) {
+        } catch (error) {
             console.log(error);
-        })
+        }
+
         
     };
 
-    const handleChange = (selectedOptions) => {
+    const handleChange = async (selectedOptions) => {
         //update state when a search result gets selected
         var _selectedAreas = []
         
@@ -76,18 +79,21 @@ const LocationForm = () => {
             
         }
         
-        if (globalState.currentListing.id !== ''){
-            axios.post(Api().updateServiceAreas, {
-                areas:_selectedAreas,
-                listing_id:globalState.currentListing.id
-            }).then(res =>{
-                if (res.status == 200){
-                    dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
-                }else{
-                    console.log('error')
+        if (state.currentListing.id !== '') {
+            
+            try {
+                let token = state.accessToken
+                let params = {
+                    areas:_selectedAreas,
+                    listing_id: state.currentListing.id
                 }
-                //show feedback toast
-            });
+                let updatedAreas = await updateServiceAreas(token, params)
+                dispatch({ type: Actions.serviceAreas.updateServiceAreas, areas:_selectedAreas});
+            } catch (error) {
+                console.log(error)
+            }
+
+
         }
     }
 
@@ -100,10 +106,10 @@ const LocationForm = () => {
                     <div style={styles.spacer40}></div>
                     <AsyncSelect 
                         cacheOptions 
-                        value={globalState.currentServiceAreas}
+                        value={state.currentServiceAreas}
                         loadOptions={loadSearchOptions} 
                         isMulti
-                        autoFocus = {globalState.currentServiceAreas.length == 0}
+                        autoFocus = {state.currentServiceAreas.length == 0}
                         onChange={handleChange}
                     />
                    

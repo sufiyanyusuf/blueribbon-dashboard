@@ -236,14 +236,14 @@ export const updateOrderFulfillmentState = async (token,params) => {
     })
 }
 
-export const getOrders = async (token,params) => {
+export const getOrders = async (token) => {
     return new Promise(async (resolve, reject) => {
         if (!token) {
             reject('no token')
         }
         try {
             var config = { headers: { 'Authorization': "bearer " + token } };
-            let res = await axios.get(endpoints(params).getOrders, config)
+            let res = await axios.get(endpoints().getOrders, config)
             resolve(res.data) 
         } catch (e) {
             reject(e)

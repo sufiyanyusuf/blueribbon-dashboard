@@ -50,7 +50,12 @@ const Upcoming = () => {
   const dispatch = React.useContext(DispatchContext);
 
   const [activeTab,setActiveTab] = useState(0)
-  const [orders,setOrders] = useState([])
+  const [orders, setOrders] = useState([])
+  const [pendingOrders, setPendingOrders] = useState([])
+  const [initiatedOrders, setInitiatedOrders] = useState([])
+  const [shippedOrders, setShippedOrders] = useState([])
+  const [failedOrders, setFailedOrders] = useState([])
+  const [fulfilledOrders, setFulfilledOrders] = useState([])
 
   const markOrder = async (action,subscriptionId) => {
     console.log(action,subscriptionId)
@@ -68,23 +73,47 @@ const Upcoming = () => {
       } catch (error) {
         
       }
-      
-      // axios.post(Api().updateOrderFulfillmentState, {
-      //   action:action,
-      //   subscriptionId:subscriptionId
-      // }).then(res =>{
-      //     if (res.status == 200){
-      //         setActiveTab(activeTab)
-      //     }else{
-      //         console.log('error')
-      //     }
-      //     //show feedback toast
-      // });
-      
+
     }
   }
 
+  const getSelectedOrders = () => {
+    var params;
+    switch(activeTab){
+      case 0:
+        params = 'active'
+        return orders
+        break
+      case 1:
+        params = 'pending'
+        return pendingOrders
+        break
+      case 2:
+        params = 'initiated'
+        return initiatedOrders
+        break
+      case 3:
+        params = 'shipped'
+        return shippedOrders
+        break
+      case 4:
+        params = 'failure'
+        return failedOrders
+        break
+      case 5:
+        params = 'successful'
+        return fulfilledOrders
+        break
+      default:
+        return orders
+    }
+
+  }
+
   const getOrderCards = () => {
+
+    let orders = getSelectedOrders()
+
     if (orders.length < 1){
       return 
     }
@@ -177,12 +206,24 @@ const Upcoming = () => {
   const fetchOrders = async () => {
 
     try {
-      const params = getActiveTab()
+
       let token = state.accessToken
-      let orders = await getOrders(token, params)
+      let orders = await getOrders(token)
+
       setOrders(orders)
+      let initiatedOrders = orders.filter(order => order.fulfillment_state === 'initiated')
+      setInitiatedOrders(initiatedOrders)
+      let pendingOrders = orders.filter(order => order.fulfillment_state === 'pending')
+      setPendingOrders(pendingOrders)
+      let shippedOrders = orders.filter(order => order.fulfillment_state === 'shipped')
+      setShippedOrders(shippedOrders)
+      let failedOrders = orders.filter(order => order.fulfillment_state === 'failure')
+      setFailedOrders(failedOrders)
+      let fulfilledOrders = orders.filter(order => order.fulfillment_state === 'successful')
+      setFulfilledOrders(fulfilledOrders)
+
     } catch (error) {
-      
+      console.log(error)
     }
   }
 
@@ -190,7 +231,7 @@ const Upcoming = () => {
   useEffect(() => {
     
     fetchOrders()
-
+    
     // axios.get(Api(params).getOrders)
     //   .then(res => {
     //     setOrders(res.data)
@@ -213,27 +254,27 @@ const Upcoming = () => {
 
                 <Button eventKey={0} variant="white" style={styles.navLink} onClick={()=>selectTab(0)} active = {activeTab == 0}>
                   <span>Active&ensp;</span>
-                  <Badge variant="primary" style={styles.badge}> 12 </Badge>
+                <Badge variant="primary" style={styles.badge}>{orders.length}</Badge>
                 </Button>
                 <Button eventKey={1} variant="white" style={styles.navLink} onClick={()=>selectTab(1)} active = {activeTab == 1}>
                     <span>Pending&ensp;</span> 
-                    <Badge variant="secondary" style={styles.badge}> 12 </Badge>
+                    <Badge variant="secondary" style={styles.badge}>{pendingOrders.length}</Badge>
                 </Button>
                 <Button eventKey={2} variant="white" style={styles.navLink} onClick={()=>selectTab(2)} active = {activeTab == 2}>
                     <span>Initiated&ensp;</span>
-                    <Badge variant="warning" style={styles.badge}> 12 </Badge>
+                    <Badge variant="warning" style={styles.badge}>{initiatedOrders.length}</Badge>
                 </Button>
                 <Button eventKey={3} variant="white" style={styles.navLink} onClick={()=>selectTab(3)} active = {activeTab == 3}>
                     <span>Shipped&nbsp;</span>
-                    <Badge variant="warning" style={styles.badge}> 0 </Badge> 
+                    <Badge variant="warning" style={styles.badge}>{shippedOrders.length}</Badge> 
                 </Button>
                 <Button eventKey={4} variant="white" style={styles.navLink} onClick={()=>selectTab(4)} active = {activeTab == 4}>
                     <span>Failures&nbsp;</span>
-                    <Badge variant="danger" style={styles.badge}> 0 </Badge> 
+                    <Badge variant="danger" style={styles.badge}>{failedOrders.length}</Badge> 
                 </Button>
                 <Button eventKey={5} variant="white" style={styles.navLink} onClick={()=>selectTab(5)} active = {activeTab == 5}>
                     <span>Fulfilled&nbsp;</span> 
-                    <Badge variant="success" style={styles.badge}> 12 </Badge> 
+                    <Badge variant="success" style={styles.badge}>{fulfilledOrders.length}</Badge> 
                 </Button>
               </ButtonGroup>
               

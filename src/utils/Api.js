@@ -221,3 +221,33 @@ export const removeModifier = async (token,params) => {
 
 
 
+export const updateOrderFulfillmentState = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.post(endpoints().updateOrderFulfillmentState, params, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+export const getOrders = async (token,params) => {
+    return new Promise(async (resolve, reject) => {
+        if (!token) {
+            reject('no token')
+        }
+        try {
+            var config = { headers: { 'Authorization': "bearer " + token } };
+            let res = await axios.get(endpoints(params).getOrders, config)
+            resolve(res.data) 
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+

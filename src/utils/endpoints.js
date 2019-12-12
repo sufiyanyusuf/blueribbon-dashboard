@@ -28,8 +28,8 @@ const Endpoints = (params,) => {
             removeModifier: 'http://localhost:4000/business/modifier/remove/' + params,
             
             //OrderManagement
-            getOrders:'http://localhost:4000/orderManagement/getOrders/'+params,
-            updateOrderFulfillmentState: 'http://localhost:4000/orderManagement/updateFulfillmentState',
+            getOrders:'http://localhost:4000/business/orderManagement/getOrders/'+params,
+            updateOrderFulfillmentState: 'http://localhost:4000/business/orderManagement/updateFulfillmentState',
             
             //Organization
             getBusinessProfile:'http://localhost:4000/business/info/',

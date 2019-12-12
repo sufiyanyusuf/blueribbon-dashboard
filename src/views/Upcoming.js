@@ -4,9 +4,8 @@ import 'react-vis/dist/style.css';
 import { Container,Nav,Row,Col,Tab,Tabs,Badge,ListGroup,ListGroupItem,
   ButtonGroup,Button,Card,CardDeck,CardColumns,DropdownButton,Dropdown,
 } from "react-bootstrap";
-import Api from '../utils/endpoints';
-import axios from 'axios';
-
+import { getOrders,updateOrderFulfillmentState } from '../utils/Api'
+import {StateContext,DispatchContext} from '../redux/contexts';
 
 const timeSince = (timestamp) => {
   const options = {year: 'numeric', month: 'short', day: 'numeric' };
@@ -47,23 +46,41 @@ const capitalize = (s) => {
 
 const Upcoming = () => {
 
+  const state = React.useContext(StateContext);
+  const dispatch = React.useContext(DispatchContext);
+
   const [activeTab,setActiveTab] = useState(0)
   const [orders,setOrders] = useState([])
 
-  const markOrder = (action,subscriptionId) => {
+  const markOrder = async (action,subscriptionId) => {
     console.log(action,subscriptionId)
-    if (action && subscriptionId){
-      axios.post(Api().updateOrderFulfillmentState, {
-        action:action,
-        subscriptionId:subscriptionId
-      }).then(res =>{
-          if (res.status == 200){
-              setActiveTab(activeTab)
-          }else{
-              console.log('error')
-          }
-          //show feedback toast
-    });
+    if (action && subscriptionId) {
+
+      try {
+        let token = state.accessToken
+        let params = {
+          action:action,
+          subscriptionId:subscriptionId
+        }
+        let orders = await updateOrderFulfillmentState(token, params)
+        fetchOrders()
+
+      } catch (error) {
+        
+      }
+      
+      // axios.post(Api().updateOrderFulfillmentState, {
+      //   action:action,
+      //   subscriptionId:subscriptionId
+      // }).then(res =>{
+      //     if (res.status == 200){
+      //         setActiveTab(activeTab)
+      //     }else{
+      //         console.log('error')
+      //     }
+      //     //show feedback toast
+      // });
+      
     }
   }
 
@@ -129,37 +146,56 @@ const Upcoming = () => {
     })
   }
 
-  useEffect(() => {
-    var param = 'pending'
-    console.log(activeTab)
+  const getActiveTab = () => {
+    var params = 'pending'
     switch(activeTab){
       case 0:
-        param = 'active'
+        params = 'active'
         break
       case 1:
-        param = 'pending'
+        params = 'pending'
         break
       case 2:
-        param = 'initiated'
+        params = 'initiated'
         break
       case 3:
-        param = 'shipped'
+        params = 'shipped'
         break
       case 4:
-        param = 'failure'
+        params = 'failure'
         break
       case 5:
-        param = 'successful'
+        params = 'successful'
         break
       default:
-        param = 'pending'
+        params = 'pending'
     }
+    return params
+  }
 
-    // Fetch lists
-    axios.get(Api(param).getOrders)
-      .then(res => {
-        setOrders(res.data)
-      })
+  // Fetch lists
+  const fetchOrders = async () => {
+
+    try {
+      const params = getActiveTab()
+      let token = state.accessToken
+      let orders = await getOrders(token, params)
+      setOrders(orders)
+    } catch (error) {
+      
+    }
+  }
+
+
+  useEffect(() => {
+    
+    fetchOrders()
+
+    // axios.get(Api(params).getOrders)
+    //   .then(res => {
+    //     setOrders(res.data)
+    // })
+    
     },[activeTab]);
   
   const selectTab = (key) => {

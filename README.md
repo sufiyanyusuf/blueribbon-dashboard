@@ -8,6 +8,6 @@ This repository is the business facing dashboard, where an onboarded business co
 - Monitor orders placed via the app
 - View invoices (via Stripe)
 
-(These are features that were built.)
+(These are features that I built in a 3-4 month period)
 
 Built using React, Javascript & a little Typescript
